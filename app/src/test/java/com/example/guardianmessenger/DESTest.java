@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import com.example.guardianmessenger.encryption.DES;
+
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
@@ -27,8 +29,8 @@ public class DESTest {
         System.out.println(key);
         String message = "hello";
         byte[] encrypted = des.encrypt(key, message);
-        byte[] decrypted = des.decrypt(key, encrypted);
-        assertEquals(message, new String(decrypted));
+        String decrypted = des.decrypt(key, encrypted);
+        assertEquals(message, decrypted);
 
     }
 }

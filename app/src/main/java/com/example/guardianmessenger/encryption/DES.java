@@ -1,4 +1,4 @@
-package com.example.guardianmessenger;
+package com.example.guardianmessenger.encryption;
 
 import android.util.Log;
 
@@ -8,34 +8,34 @@ import javax.crypto.SecretKey;
 public class DES implements EncryptionAlgorithm {
 
     Cipher cipher;
-    DES() {
+    public DES() {
         try {
             // cipher initialization
             cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
         } catch (Exception e) {
-            System.out.println("Cipher initialization error.");
+            Log.e("DES", "Cipher Initialization",e);
         }
 
     }
     @Override
-    public byte[] encrypt(SecretKey key, String message) {
+    public byte[] encrypt(SecretKey key, String string) {
         try {
             cipher.init(Cipher.ENCRYPT_MODE, key);
-            byte[] byteMsg = message.getBytes();
-            return cipher.doFinal(byteMsg);
+            byte[] byteMsg = string.getBytes();
+            return cipher.doFinal(byteMsg); // string encrypted
         } catch (Exception e) {
-           System.out.println("Encryption error.");
+            Log.e("DES", "Encryption",e);
         }
         return null;
     }
 
     @Override
-    public byte[] decrypt(SecretKey key, byte[] encryptedMsg) {
+    public String decrypt(SecretKey key, byte[] encryptedMsg) {
         try {
             cipher.init(Cipher.DECRYPT_MODE, key);
-            return cipher.doFinal(encryptedMsg);
+            return new String(cipher.doFinal(encryptedMsg)); // string decrypted
         } catch (Exception e) {
-            System.out.println("Decryption error.");
+            Log.e("DES", "Decryption",e);
         }
         return null;
     }
