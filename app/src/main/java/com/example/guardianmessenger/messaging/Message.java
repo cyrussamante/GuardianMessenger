@@ -33,10 +33,15 @@ public class Message {
         return datetime;
     }
 
+    public MessageStatus getStatus() {
+        return status;
+    }
+
     public void setStatus(MessageStatus status) {
         this.status = status;
     }
-    public MessageStatus getStatus() {
-        return status;
+
+    public void setReceivers(HashSet<String> receivers) {
+        this.receivers = receivers;
     }
 }
