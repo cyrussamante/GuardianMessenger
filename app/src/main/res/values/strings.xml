@@ -6,4 +6,9 @@
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="login_subtitle">Please login with your credentials</string>
+    <string name="message">Message</string>
+    <string name="create_group_chat">Create Group Chat</string>
+    <string name="request_chat_logs">Request Chat Logs</string>
+    <string name="request_outreach">Request Outreach</string>
+
 </resources>
