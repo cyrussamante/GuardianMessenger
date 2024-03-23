@@ -16,6 +16,7 @@ import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
+
     private Button LogoutBtn;
 
     @Override
