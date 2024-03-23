@@ -51,11 +51,11 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 //login
                                 String user_id = mAuth.getCurrentUser().getUid();
-                                Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }else{
                                 //failed
-                                Toast.makeText(LoginActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
