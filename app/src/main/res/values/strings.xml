@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">GuardianMessenger</string>
+    <string name="app_name">Guardian Messenger</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="register_new_user">Register New User</string>
     <string name="register">Register</string>
+    <string name="register_subtitle">Please register to login</string>
     <string name="login">Login</string>
-    <string name="login_subtitle">Please login with your credentials</string>
+    <string name="logout">Logout</string>
+    <string name="login_subtitle">Please login to continue</string>
     <string name="message">Message</string>
     <string name="create_group_chat">Create Group Chat</string>
     <string name="request_chat_logs">Request Chat Logs</string>

@@ -5,85 +5,64 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="390dp"
         android:layout_height="wrap_content"
-        android:layout_margin="25dp"
         android:gravity="center"
-        android:text="Guardian Messenger"
-        android:textSize="25sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.32"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.249" />
+        app:layout_constraintVertical_bias="0.501">
 
-    <Button
-        android:id="@+id/logout_button"
-        android:layout_width="240dp"
-        android:layout_height="55dp"
-        android:text="Logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.765" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="34sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/message_button"
-        android:layout_width="240dp"
-        android:layout_height="55dp"
-        android:text="@string/message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.436" />
+        <Button
+            android:id="@+id/message_button"
+            android:layout_width="240dp"
+            android:layout_height="55dp"
+            android:text="@string/message" />
 
-    <Button
-        android:id="@+id/create_gc_button"
-        android:layout_width="240dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="19dp"
-        android:text="@string/create_group_chat"
-        app:layout_constraintBottom_toTopOf="@+id/request_outreach_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message_button"
-        app:layout_constraintVertical_bias="1.0" />
+        <Button
+            android:id="@+id/create_gc_button"
+            android:layout_width="240dp"
+            android:layout_height="55dp"
+            android:text="@string/create_group_chat" />
 
-    <Button
-        android:id="@+id/request_outreach_button"
-        android:layout_width="240dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/request_outreach"
-        app:layout_constraintBottom_toTopOf="@+id/request_chat_logs"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        <Button
+            android:id="@+id/request_outreach_button"
+            android:layout_width="240dp"
+            android:layout_height="55dp"
+            android:text="@string/request_outreach" />
 
-    <Button
-        android:id="@+id/request_chat_logs"
-        android:layout_width="240dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/request_chat_logs"
-        app:layout_constraintBottom_toTopOf="@+id/logout_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/request_chat_logs"
+            android:layout_width="240dp"
+            android:layout_height="55dp"
+            android:text="@string/request_chat_logs" />
+
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="240dp"
+            android:layout_height="55dp"
+            android:text="@string/logout" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
