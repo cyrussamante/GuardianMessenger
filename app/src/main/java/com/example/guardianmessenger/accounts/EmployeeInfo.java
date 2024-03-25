@@ -1,4 +1,4 @@
-package com.example.guardianmessenger.employees;
+package com.example.guardianmessenger.accounts;
 
 public class EmployeeInfo {
 
@@ -12,6 +12,15 @@ public class EmployeeInfo {
     public EmployeeInfo(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public EmployeeInfo(EmployeeInfo info) {
+        this.name = String.valueOf(info.name);
+        this.email = String.valueOf(info.email);
+        this.age = info.age;
+        this.position = info.position;
+        this.department = info.department;
+        this.salary = info.salary;
     }
 
     public EmployeeInfo(String name, String email, int age, String position, String department, int salary) {

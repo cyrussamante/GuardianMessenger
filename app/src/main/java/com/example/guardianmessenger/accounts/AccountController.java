@@ -1,51 +1,41 @@
 package com.example.guardianmessenger.accounts;
 
-import com.example.guardianmessenger.employees.*;
-import com.google.firebase.auth.*;
-import com.google.firebase.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class AccountController {
 
-    private FirebaseAuth mAuth;
-    public AccountController() {
-        // Empty constructor
+    private EmployeeDB employeeDB;
+
+    public AccountController(EmployeeDB db) {
+        this.employeeDB = db;
     }
 
-    public EmployeeInfo getUserInfo() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        assert user != null;
-        String name = user.getDisplayName();
-        String email = user.getEmail();
-        return new EmployeeInfo(name, email);
+    /***
+     * Get copy of an employee's info
+     * @return EmployeeInfo
+     */
+    public EmployeeInfo getEmployeeInfo(int employeeID) {
+        Employee employee = employeeDB.getEmployee(employeeID);
+        return new EmployeeInfo(employee.getInfo());
     }
 
-    public EmployeeInfo getEmployeeInfo(Employee employee) {
-        //TODO: Get employee info from the database
-        return new EmployeeInfo(null, null);
-    }
 
-    public void updateUserInfo(EmployeeInfo employeeInfo) {
-        FirebaseUser user = mAuth.getCurrentUser();
-        assert user != null;
-        user.updateEmail(employeeInfo.email);
-        user.updateProfile(new com.google.firebase.auth.UserProfileChangeRequest.Builder()
-                .setDisplayName(employeeInfo.name)
-                .build());
+    /***
+     * Update an employee's info
+     */
+    public void updateEmployeeInfo(int employeeId, EmployeeInfo newEmployeeInfo) {
+        //TODO: verify that the user has permission to update the account
+        Employee employee = employeeDB.getEmployee(employeeId);
+        employee.updateInfo(newEmployeeInfo);
     }
-
-    public void updateEmployeeInfo(EmployeeInfo employeeInfo) {
-        //TODO: Update employee info in the database
-    }
-
-    public void deleteUser() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        assert user != null;
-        user.delete();
-    }
-
-    public void deleteAccount(Employee employee) {
-        //TODO: Delete account from the database
+    /***
+     * Delete an account
+     */
+    public void deleteAccount(int employeeId) {
+        //TODO: verify that the user has permission to delete the account
+        employeeDB.removeEmployee(employeeId);
     }
 
 

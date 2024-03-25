@@ -4,7 +4,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.guardianmessenger.employees.Employee;
 import com.example.guardianmessenger.messaging.Message;
 
 import java.time.LocalDateTime;
