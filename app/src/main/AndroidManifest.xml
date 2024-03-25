@@ -13,9 +13,11 @@
         android:theme="@style/Theme.GuardianMessenger"
         tools:targetApi="31">
         <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".testActivity"
             android:exported="false" />
-
         <activity
             android:name=".LoginActivity"
             android:exported="false" />

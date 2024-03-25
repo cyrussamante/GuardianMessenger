@@ -12,5 +12,7 @@
     <string name="create_group_chat">Create Group Chat</string>
     <string name="request_chat_logs">Request Chat Logs</string>
     <string name="request_outreach">Request Outreach</string>
+    <string name="message_hint">Type your message</string>
+    <string name="contact_name">Contact Name</string>
 
 </resources>
