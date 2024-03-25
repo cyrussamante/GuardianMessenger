@@ -1,2 +1,7 @@
-package com.example.guardianmessenger.chatlog;public class ChatLogController {
+package com.example.guardianmessenger.chatlog;
+
+public class ChatLogController {
+
+
+
 }
