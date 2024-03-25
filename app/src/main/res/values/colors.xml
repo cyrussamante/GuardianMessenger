@@ -8,4 +8,8 @@
     <color name="purple">#6750A3</color>
     <color name="very_light_purple">#F3EBFF</color>
 
+    <color name="sender_colour">#D7B5FF</color>
+    <color name="receiver_color">#FFFFFF</color>
+
+
 </resources>
