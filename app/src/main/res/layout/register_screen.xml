@@ -8,7 +8,7 @@
 
     <ImageButton
         android:id="@+id/back_button"
-        android:layout_width="54dp"
+        android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="@drawable/purple_circle"
         android:tint="@color/white"
