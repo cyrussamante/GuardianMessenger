@@ -1,16 +1,16 @@
 package com.example.guardianmessenger.messaging;
 
-import java.time.LocalDateTime;
+import com.google.firebase.Timestamp;
 import java.util.HashSet;
 
 public class Message {
     private final String message;
     private final String senderID;
-    private final LocalDateTime datetime;
+    private final Timestamp datetime;
     private HashSet<String> receivers;
     private MessageStatus status = MessageStatus.PENDING;
 
-    public Message(String message, String senderID, HashSet<String> receivers, LocalDateTime datetime) {
+    public Message(String message, String senderID, HashSet<String> receivers, Timestamp datetime) {
         this.message = message;
         this.senderID = senderID;
         this.receivers = receivers;
@@ -29,7 +29,7 @@ public class Message {
         return receivers;
     }
 
-    public LocalDateTime getDatetime() {
+    public Timestamp getDatetime() {
         return datetime;
     }
 
