@@ -1,7 +1,17 @@
 package com.example.guardianmessenger.accounts;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.guardianmessenger.RegisterActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.*;
+import com.google.firebase.firestore.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 
 public class AccountController {
@@ -38,5 +48,19 @@ public class AccountController {
         employeeDB.removeEmployee(employeeId);
     }
 
-
+    public void createAccount(FirebaseFirestore db, int employeeId, EmployeeInfo info) {
+        db.collection("employees").document(String.valueOf(employeeId)).set(info)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("CreateAccount", "Successfully created account");
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w("CreateAccount", "Error creating account", e);
+                }
+            });
+    }
 }
