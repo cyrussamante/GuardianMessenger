@@ -12,26 +12,26 @@ public class KDCController {
     }
     public void registerEmployee(Employee employee) {
         //TODO
-        if (keyDB.getKey(employee.getID()) == null) {
+        if (keyDB.getKey(employee) == null) {
             SecretKey key = createKey();
-            int employeeID = employee.getID();
-            updateKey(employeeID, key);
+            updateKey(employee, key);
         }
     }
 
-    public SecretKey getKey(int employeeID) {
-        return keyDB.getKey(employeeID);
+    public SecretKey getKey(Employee employee) {
+        return keyDB.getKey(employee);
     }
 
-    public void updateKey(int employeeID, SecretKey key) {
-        keyDB.updateKey(employeeID, key);
+    public void updateKey(Employee employee, SecretKey key) {
+        keyDB.updateKey(employee, key);
     }
 
     public SecretKey createKey() {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("DES");
             keyGen.init(56);
-            return keyGen.generateKey();
+            SecretKey key = keyGen.generateKey();
+            return key;
         } catch (Exception e) {return null;}
     }
 }
