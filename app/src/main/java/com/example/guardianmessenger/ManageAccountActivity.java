@@ -116,7 +116,7 @@ public class ManageAccountActivity extends AppCompatActivity {
         if (position != null) {currentUser.setPosition(position);}
         if (department != null) {currentUser.setDepartment(department);}
         if (salary != 0) {currentUser.setSalary(salary);}
-        if (age != 0) {currentUser.setSalary(age);}
+        if (age != 0) {currentUser.setAge(age);}
 
     }
 
