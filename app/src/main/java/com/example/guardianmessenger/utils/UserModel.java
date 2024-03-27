@@ -2,10 +2,14 @@ package com.example.guardianmessenger.utils;
 
 import com.google.firebase.Timestamp;
 
+import javax.crypto.SecretKey;
+
 public class UserModel {
     private String phoneNumber, name, email, userId, position, department, fcmToken;
     private Timestamp createdTimestamp;
     private int age, salary;
+
+    private SecretKey secretKey;
 
     public UserModel() {
     }
@@ -21,6 +25,14 @@ public class UserModel {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public SecretKey getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(SecretKey secretKey) {
+        this.secretKey = secretKey;
     }
 
     public String getName() {
