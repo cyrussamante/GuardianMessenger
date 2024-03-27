@@ -18,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,11 +31,10 @@ public class ManageAccountActivity extends AppCompatActivity {
 
     ImageButton backButton;
     Button updateButton;
-    EditText nameField, positionField, departmentField, salaryField;
-    String name, position, department, salary, age;
-
-    HashMap<String, EditText> fieldMappings = new HashMap<>();
-    HashMap<String, String> valueMappings = new HashMap<>();
+    EditText nameField, positionField, departmentField, salaryField, ageField;
+    String name, position, department;
+    int salary, age;
+    UserModel currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,8 @@ public class ManageAccountActivity extends AppCompatActivity {
         positionField = findViewById(R.id.positionInput);
         departmentField = findViewById(R.id.departmentInput);
         salaryField = findViewById(R.id.salaryInput);
+        ageField = findViewById(R.id.ageInput);
+
 
         DocumentReference user = FirebaseUtils.getUserDetails();
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -63,21 +65,19 @@ public class ManageAccountActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        name = document.getString("name");
-                        nameField.setText(name != null? name : "Name");
-                        valueMappings.put("name", name);
 
-                        position = document.getString("position");
-                        positionField.setText(position != null? position : "Position");
-                        valueMappings.put("position", position);
+                        currentUser = document.toObject(UserModel.class);
+                        name = currentUser.getName();
+                        position = currentUser.getPosition();
+                        department = currentUser.getDepartment();
+                        salary = currentUser.getSalary();
+                        age = currentUser.getAge();
 
-                        department = document.getString("department");
-                        departmentField.setText(department != null? department : "Department");
-                        valueMappings.put("department", department);
-
-                        salary = String.valueOf(document.getLong("salary"));
-                        salaryField.setText(!salary.equals("0") ? department : "Salary");
-                        valueMappings.put("salary", salary);
+                        nameField.setText(name != null? name : "Name");//
+                        positionField.setText(position != null? position : "Position");//
+                        departmentField.setText(department != null? department : "Department");//
+                        salaryField.setText(salary != 0 ? String.valueOf(salary): "Salary");
+                        ageField.setText(age != 0 ? String.valueOf(age) : "Age");
 
 
                     }
@@ -98,18 +98,27 @@ public class ManageAccountActivity extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ManageAccountActivity.this, MainActivity.class);
-                startActivity(i);
+                updateValues();
+                FirebaseUtils.getUserDetails().set(currentUser);
+                Toast.makeText(ManageAccountActivity.this, "Account Updated", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void updateValues() {
-        for (String v : valueMappings.keySet()) {
-            fieldMappings.get(v);
-        }
-    }
+        name = String.valueOf(nameField.getText());
+        position = String.valueOf(positionField.getText());
+        department = String.valueOf(departmentField.getText());
+        salary = Integer.parseInt(String.valueOf(salaryField.getText()));
+        age = Integer.parseInt(String.valueOf(ageField.getText()));
 
+        if (name != null) {currentUser.setName(name);}
+        if (position != null) {currentUser.setPosition(position);}
+        if (department != null) {currentUser.setDepartment(department);}
+        if (salary != 0) {currentUser.setSalary(salary);}
+        if (age != 0) {currentUser.setSalary(age);}
+
+    }
 
 
 
