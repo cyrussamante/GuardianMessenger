@@ -31,8 +31,8 @@ public class ChatLogDB {
         if (!entryExists(senderID, recipientIDs)) return null;
         ArrayList<Message> fetchedChatLog = new ArrayList<>();
         for (Message m : db) {
-            if (m.getSenderID().equals(senderID) && m.getReceivers().equals(recipientIDs) && m.getDatetime().isAfter(start) && m.getDatetime().isBefore(end))
-                fetchedChatLog.add(m);
+//            if (m.getSenderID().equals(senderID) && m.getReceivers().equals(recipientIDs) && m.getDatetime().isAfter(start) && m.getDatetime().isBefore(end))
+//                fetchedChatLog.add(m);
         }
         return fetchedChatLog;
     }

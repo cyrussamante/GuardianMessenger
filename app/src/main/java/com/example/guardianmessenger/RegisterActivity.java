@@ -12,14 +12,15 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.auth.User;
 
 public class RegisterActivity extends AppCompatActivity {
     private Button btnCreate;
@@ -51,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                registerUser(mAuth.getCurrentUser().getUid());
                                 Toast.makeText(RegisterActivity.this, "Registration Success", Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(RegisterActivity.this, "Registration Failure", Toast.LENGTH_SHORT).show();
@@ -66,6 +68,27 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(i);
+            }
+        });
+    }
+
+    void registerUser(String userID){
+            String userEmail = registrationEmail.getText().toString();
+            if (userEmail.isEmpty() ||userEmail.length()<3){
+                registrationEmail.setError("Too short");
+                return;
+            }
+
+            UserModel userModel = new UserModel(Timestamp.now(),userID, userEmail);
+        FirebaseUtils.getUserDetails().set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(RegisterActivity.this, "Added User Details", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
             }
         });
     }

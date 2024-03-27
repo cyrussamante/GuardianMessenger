@@ -16,10 +16,13 @@
             android:name=".MessageActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".CreateChat"
             android:exported="false" />
         <activity
-            android:name=".testActivity"
+            android:name=".HomeScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ChatActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
