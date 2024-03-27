@@ -14,6 +14,8 @@
     <string name="request_outreach">Request Outreach</string>
     <string name="message_hint">Type your message</string>
     <string name="contact_name">Contact Name</string>
+    <string name="search">Search</string>
+    <string name="create_chat">Create New Chat</string>
 
 
 </resources>

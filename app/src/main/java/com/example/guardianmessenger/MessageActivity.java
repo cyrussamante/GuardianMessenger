@@ -24,7 +24,6 @@ public class MessageActivity extends AppCompatActivity {
         backButton = findViewById(R.id.back_button);
         addButton = findViewById(R.id.add_button);
         searchButton = findViewById(R.id.search_button);
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

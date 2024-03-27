@@ -1,14 +1,12 @@
 package com.example.guardianmessenger;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +19,7 @@ import com.google.firebase.firestore.Query;
 public class CreateChat extends AppCompatActivity {
 
     EditText searchInput;
-    Button searchButton;
+    ImageButton searchButton, backButton;
     RecyclerView recyclerView;
 
     SearchUserRecyclerAdapter adapter;
@@ -30,8 +28,9 @@ public class CreateChat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_chat);
         searchButton = findViewById(R.id.search_button);
+        backButton = findViewById(R.id.back_button);
         searchInput = findViewById(R.id.search_input);
-        recyclerView = findViewById(R.id.search_recyler_view);
+        recyclerView = findViewById(R.id.search_recycler_view);
         searchInput.requestFocus();
 
         searchButton.setOnClickListener(v ->{
@@ -41,12 +40,20 @@ public class CreateChat extends AppCompatActivity {
                 return;
             }
 
-            setupSearchRecylerView(searchTerm);
+            setupSearchRecyclerView(searchTerm);
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CreateChat.this, MessageActivity.class);
+                startActivity(i);
+            }
         });
 
     }
 
-    void setupSearchRecylerView(String searchTerm){
+    void setupSearchRecyclerView(String searchTerm){
 
         Query query = FirebaseUtils.allUsersCollectionReference().whereGreaterThanOrEqualTo("name",searchTerm);
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>().setQuery(query,UserModel.class).build();

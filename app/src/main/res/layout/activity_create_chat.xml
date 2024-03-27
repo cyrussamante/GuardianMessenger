@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,57 +7,64 @@
     android:layout_height="match_parent"
     tools:context=".CreateChat">
 
-    <RelativeLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:padding="10dp"
-        android:id="@+id/top_half">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Chat"
-            android:id="@+id/top_text_view"
-            android:background="@color/black"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:layout_marginBottom="5dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/purple_circle"
+            app:srcCompat="?attr/homeAsUpIndicator"
+            app:tint="@color/white" />
+
         <EditText
             android:id="@+id/search_input"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="48dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
             android:background="@drawable/round_corner"
-            android:hint="@string/email"
+            android:backgroundTint="@color/very_light_purple"
+            android:hint="@string/search"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColorHint="@color/hint_text"
-            android:textSize="16sp"
-            android:layout_below="@id/top_text_view"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="seach"
-            android:layout_below="@id/search_input"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/search_button"/>
-    </RelativeLayout>
+            android:textSize="16sp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/top_half"
-        android:layout_margin="10dp"
-        android:id="@+id/search_results">
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:id="@+id/search_recyler_view"/>
-    </RelativeLayout>
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/purple_circle"
+            app:srcCompat="@drawable/baseline_search_24"
+            app:tint="@color/very_light_purple" />
+
+    </LinearLayout>
 
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
