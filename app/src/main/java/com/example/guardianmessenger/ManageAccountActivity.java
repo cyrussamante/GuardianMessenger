@@ -73,11 +73,11 @@ public class ManageAccountActivity extends AppCompatActivity {
                         salary = currentUser.getSalary();
                         age = currentUser.getAge();
 
-                        nameField.setText(name != null? name : "Name");//
-                        positionField.setText(position != null? position : "Position");//
-                        departmentField.setText(department != null? department : "Department");//
-                        salaryField.setText(salary != 0 ? String.valueOf(salary): "Salary");
-                        ageField.setText(age != 0 ? String.valueOf(age) : "Age");
+                        nameField.setText(name != null? name : null);//
+                        positionField.setText(position != null? position : null);//
+                        departmentField.setText(department != null? department : null);//
+                        salaryField.setText(salary != 0 ? String.valueOf(salary): null);
+                        ageField.setText(age != 0 ? String.valueOf(age) : null);
 
 
                     }

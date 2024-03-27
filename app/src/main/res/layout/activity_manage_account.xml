@@ -92,8 +92,8 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/light_gray"
                 android:ems="10"
+                android:hint="Name"
                 android:inputType="text"
-                android:text="Name"
                 android:textColor="@color/hint_text" />
 
         </LinearLayout>
@@ -125,8 +125,8 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/light_gray"
                 android:ems="10"
+                android:hint="Position"
                 android:inputType="text"
-                android:text="Position"
                 android:textColor="@color/hint_text" />
         </LinearLayout>
 
@@ -157,8 +157,8 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/light_gray"
                 android:ems="10"
+                android:hint="Department"
                 android:inputType="text"
-                android:text="Department"
                 android:textColor="@color/hint_text" />
         </LinearLayout>
 
@@ -189,8 +189,8 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/light_gray"
                 android:ems="10"
-                android:inputType="text"
-                android:text="Salary"
+                android:inputType="number"
+                android:hint="Salary"
                 android:textColor="@color/hint_text" />
         </LinearLayout>
 
@@ -221,6 +221,9 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@color/light_gray"
+                android:textColor="@color/hint_text"
+                android:inputType="number"
+                android:hint="Age"
                 android:ems="10" />
 
         </LinearLayout>
