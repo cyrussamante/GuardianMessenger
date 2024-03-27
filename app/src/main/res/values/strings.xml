@@ -16,6 +16,12 @@
     <string name="contact_name">Contact Name</string>
     <string name="search">Search</string>
     <string name="create_chat">Create New Chat</string>
+    <string name="manage_account">Manage Account</string>
+    <string name="update_acct">Update Account</string>
+    <string name="delete_acct">Delete Account</string>
+
+
+
 
 
 </resources>

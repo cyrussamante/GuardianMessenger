@@ -1,16 +1,16 @@
 package com.example.guardianmessenger.accounts;
 
 public class Employee {
-    private final int ID;
+    private final String ID;
     private EmployeeInfo info;
 
 
-    public Employee(int ID, EmployeeInfo info) {
+    public Employee(String ID, EmployeeInfo info) {
         this.ID = ID;
         this.info = info;
     }
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 

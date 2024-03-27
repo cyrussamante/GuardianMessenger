@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button messageBtn, LogoutBtn;
+    private Button messageBtn, LogoutBtn, manageBtn;
 
     @Override
     protected void onStart() {
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         messageBtn = findViewById(R.id.message_button);
+        manageBtn = findViewById(R.id.manage_button);
         LogoutBtn = findViewById(R.id.logout_button);
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, MessageActivity.class);
+                startActivity(i);
+            }
+        });
+
+        manageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ManageAccountActivity.class);
                 startActivity(i);
             }
         });

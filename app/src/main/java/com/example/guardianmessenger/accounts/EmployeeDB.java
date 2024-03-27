@@ -19,7 +19,7 @@ public class EmployeeDB {
         }
     }
 
-    public void removeEmployee(int employeeId) {
+    public void removeEmployee(String employeeId) {
         for (Employee e : db) {
             if (e.getID() == employeeId) {
                 db.remove(e);
@@ -28,7 +28,7 @@ public class EmployeeDB {
         }
     }
 
-    public Employee getEmployee(int id) {
+    public Employee getEmployee(String id) {
         for (Employee e : db) {
             if (e.getID() == id) {
                 return e;

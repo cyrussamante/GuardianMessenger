@@ -26,7 +26,7 @@ public class AccountController {
      * Get copy of an employee's info
      * @return EmployeeInfo
      */
-    public EmployeeInfo getEmployeeInfo(int employeeID) {
+    public EmployeeInfo getEmployeeInfo(String employeeID) {
         Employee employee = employeeDB.getEmployee(employeeID);
         return new EmployeeInfo(employee.getInfo());
     }
@@ -35,7 +35,7 @@ public class AccountController {
     /***
      * Update an employee's info
      */
-    public void updateEmployeeInfo(int employeeId, EmployeeInfo newEmployeeInfo) {
+    public void updateEmployeeInfo(String employeeId, EmployeeInfo newEmployeeInfo) {
         //TODO: verify that the user has permission to update the account
         Employee employee = employeeDB.getEmployee(employeeId);
         employee.updateInfo(newEmployeeInfo);
@@ -43,7 +43,7 @@ public class AccountController {
     /***
      * Delete an account
      */
-    public void deleteAccount(int employeeId) {
+    public void deleteAccount(String employeeId) {
         //TODO: verify that the user has permission to delete the account
         employeeDB.removeEmployee(employeeId);
     }
