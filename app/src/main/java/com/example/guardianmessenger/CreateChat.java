@@ -43,6 +43,7 @@ public class CreateChat extends AppCompatActivity {
             setupSearchRecyclerView(searchTerm);
         });
 
+        // back button listener
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

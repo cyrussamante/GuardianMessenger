@@ -21,9 +21,12 @@ public class MessageActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_message);
 
+        // initializing views
         backButton = findViewById(R.id.back_button);
         addButton = findViewById(R.id.add_button);
         searchButton = findViewById(R.id.search_button);
+
+        // back button listener
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,6 +35,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+        // add button listener
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
