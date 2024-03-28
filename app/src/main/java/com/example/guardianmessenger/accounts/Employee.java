@@ -21,4 +21,12 @@ public class Employee {
     public void updateInfo(EmployeeInfo info) {
         this.info = info;
     }
+
+    public void addOutreach(Employee employee) {
+        info.addOutreachApproval(employee);
+    }
+
+    public void removeOutreach(Employee employee) {
+        info.removeOutreachApproval(employee);
+    }
 }
