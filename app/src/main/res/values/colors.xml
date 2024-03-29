@@ -7,6 +7,7 @@
     <color name="hint_text">#7D7D7D</color>
     <color name="purple">#6750A3</color>
     <color name="very_light_purple">#F3EBFF</color>
+    <color name="light_blue">#2196F3</color>
 
     <color name="sender_colour">#D7B5FF</color>
     <color name="receiver_color">#FFFFFF</color>

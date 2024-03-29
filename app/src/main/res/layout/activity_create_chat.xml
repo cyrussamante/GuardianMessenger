@@ -50,7 +50,7 @@
             android:layout_height="48dp"
             android:background="@drawable/round_corner"
             android:backgroundTint="@color/very_light_purple"
-            android:hint="@string/search"
+            android:hint="@string/search_users"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColorHint="@color/hint_text"

@@ -19,9 +19,7 @@
     <string name="manage_account">Manage Account</string>
     <string name="update_acct">Update Account</string>
     <string name="delete_acct">Delete Account</string>
-
-
-
+    <string name="search_users">Search Users</string>
 
 
 </resources>

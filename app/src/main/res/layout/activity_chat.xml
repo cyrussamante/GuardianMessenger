@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/purple_gradient"
+    android:fitsSystemWindows="true"
+    android:padding="5dp"
     tools:context=".ChatActivity">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/top_rounded"
         android:backgroundTint="@color/white"
         android:orientation="horizontal"
-        android:paddingTop="20dp"
-        android:paddingBottom="25dp"
+        android:layout_marginHorizontal="5dp"
+        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        android:id="@+id/chat_name_toolbar">
 
         <ImageButton
             android:id="@+id/backButton"
@@ -51,20 +54,24 @@
 
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/chat_recycler_view"
+        android:layout_below="@id/chat_name_toolbar"
+        android:layout_above="@id/inputBox">
+
+    </androidx.recyclerview.widget.RecyclerView>
     <LinearLayout
         android:id="@+id/inputBox"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/round_corner"
         android:backgroundTint="@color/white"
         android:gravity="center_horizontal"
+        android:layout_marginHorizontal="30dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.953">
+        android:layout_alignParentBottom="true">
 
         <EditText
             android:id="@+id/inputMessage"
@@ -75,7 +82,7 @@
             android:inputType="text"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="@string/message_hint"
+            android:hint="@string/message_hint"
             android:textColor="@color/hint_text"
             android:textSize="16sp" />
 
@@ -91,4 +98,4 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

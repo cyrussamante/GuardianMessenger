@@ -1,6 +1,7 @@
 package com.example.guardianmessenger.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.guardianmessenger.ChatActivity;
 import com.example.guardianmessenger.R;
+import com.example.guardianmessenger.utils.AndroidUtils;
 import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.example.guardianmessenger.utils.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -31,7 +34,10 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
             userModelViewHolder.userNameText.setText(userModel.getName()+"[Current User]");
         }
         userModelViewHolder.itemView.setOnClickListener(v -> {
-            //TODO: Create Chat
+            Intent intent = new Intent(context, ChatActivity.class);
+            AndroidUtils.passUserModel(intent,userModel);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
 
     }

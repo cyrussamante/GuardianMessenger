@@ -10,11 +10,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.guardianmessenger.adapter.RecentChatsRecyclerAdapter;
+import com.example.guardianmessenger.adapter.SearchUserRecyclerAdapter;
+import com.example.guardianmessenger.utils.ChatModel;
+import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.UserModel;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.Query;
 
 public class MessageActivity extends AppCompatActivity {
 
     private ImageButton backButton, addButton, searchButton;
 
+    RecyclerView recyclerView;
+    RecentChatsRecyclerAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +38,10 @@ public class MessageActivity extends AppCompatActivity {
         addButton = findViewById(R.id.add_button);
         searchButton = findViewById(R.id.search_button);
 
+        recyclerView = findViewById(R.id.recyler_view);
+        setupRecyclerView();
+
+
         // back button listener
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,7 +51,6 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        // add button listener
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,5 +63,40 @@ public class MessageActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+    void setupRecyclerView(){
+
+        Query query = FirebaseUtils.allChatsRefs().whereArrayContains("userIds",FirebaseUtils.currentUserId()).orderBy("lastMsgTime", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<ChatModel> options = new FirestoreRecyclerOptions.Builder<ChatModel>().setQuery(query,ChatModel.class).build();
+
+        adapter = new RecentChatsRecyclerAdapter(options,getApplicationContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (adapter!=null){
+            adapter.startListening();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (adapter!=null){
+            adapter.stopListening();
+        };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter!=null){
+            adapter.notifyDataSetChanged();
+        }
     }
 }
