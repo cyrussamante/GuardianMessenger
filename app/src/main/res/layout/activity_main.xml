@@ -10,6 +10,7 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -22,7 +23,7 @@
         app:layout_constraintVertical_bias="0.498">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
@@ -63,11 +64,50 @@
             android:text="@string/manage_account" />
 
         <Button
+            android:id="@+id/mass_message_button"
+            android:layout_width="240dp"
+            android:layout_height="55dp"
+            android:text="@string/send_mass_message" />
+
+        <Button
             android:id="@+id/logout_button"
             android:layout_width="240dp"
             android:layout_height="55dp"
             android:text="@string/logout" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/massMsgWindow"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_corner"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/errorSymbol"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_error_24"
+            android:tint="@color/purple" />
+
+        <TextView
+            android:id="@+id/massMsgText"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 

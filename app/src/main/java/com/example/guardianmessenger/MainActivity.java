@@ -2,22 +2,32 @@ package com.example.guardianmessenger;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.guardianmessenger.messaging.MassMessageController;
 import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button messageBtn, LogoutBtn, manageBtn;
+    private Button messageBtn, LogoutBtn, manageBtn, massBtn;
+    private LinearLayout massMessageWindow;
+    private TextView massMessage;
 
     @Override
     protected void onStart() {
@@ -33,9 +43,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        massMessageWindow = findViewById(R.id.massMsgWindow);
         messageBtn = findViewById(R.id.message_button);
         manageBtn = findViewById(R.id.manage_button);
+        massBtn = findViewById(R.id.mass_message_button);
+        massMessage = findViewById(R.id.massMsgText);
         LogoutBtn = findViewById(R.id.logout_button);
+
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,12 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
-//        Messages.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this,HomeScreen.class));
-//            }
-//        });
 
         // message button listener
         messageBtn.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +75,37 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ManageAccountActivity.class);
                 startActivity(i);
+            }
+        });
+
+        // mass message button listener
+        massBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, MassMessage.class);
+                startActivity(i);
+            }
+        });
+
+        // mass message listener
+        MassMessageController.messageDocument.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.e("Mass Message Activity", "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    if (!snapshot.getString("msg").isEmpty()){
+                        massMessage.setText(snapshot.getString("msg"));
+                        massMessageWindow.setVisibility(View.VISIBLE);
+                    } else {
+                        massMessageWindow.setVisibility(View.GONE);
+                    }
+                } else {
+                    Log.e("Mass Message Activity", "Current data: null");
+                }
             }
         });
 
