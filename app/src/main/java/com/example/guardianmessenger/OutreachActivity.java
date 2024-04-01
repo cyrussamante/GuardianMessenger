@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.gms.*;
 
 import com.example.guardianmessenger.outreach.OutreachController;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +26,7 @@ public class OutreachActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.outreach_screen);
 
         mAuth = FirebaseAuth.getInstance();

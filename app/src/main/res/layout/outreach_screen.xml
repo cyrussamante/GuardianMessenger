@@ -30,14 +30,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="?attr/homeAsUpIndicator"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:contentDescription="@string/back_button" />
 
         <TextView
-            android:id="@+id/manageAccountTitle"
+            android:id="@+id/outreachTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Outreach"
+            android:text="@string/outreach"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -57,7 +58,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="106dp"
         android:layout_marginBottom="20dp"
-        android:hint="Enter employee id"
+        android:hint="@string/enter_employee_id"
         app:layout_constraintBottom_toTopOf="@+id/button_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +72,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="131dp"
         android:layout_marginBottom="284dp"
-        android:text="Submit Request"
+        android:text="@string/submit_request"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,25 +86,9 @@
         android:layout_marginTop="246dp"
         android:layout_marginEnd="106dp"
         android:layout_marginBottom="24dp"
-        android:text="Enter the id of the employee you would like premission to message below"
+        android:text="@string/enter_the_id_of_the_employee_you_would_like_premission_to_message_below"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/employee_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="118dp"
-        android:layout_marginTop="167dp"
-        android:layout_marginEnd="221dp"
-        android:layout_marginBottom="55dp"
-        android:text="Outreach"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

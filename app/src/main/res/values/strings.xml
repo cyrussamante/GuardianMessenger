@@ -23,7 +23,12 @@
     <string name="send_mass_message">Send Mass Message</string>
     <string name="submit_mass_message">Submit Mass Message</string>
     <string name="remove_mass_message">Remove Mass Message</string>
-
+    <string name="outreach">Outreach</string>
+    <string name="enter_employee_id">Enter employee id</string>
+    <string name="submit_request">Submit Request</string>
+    <string name="enter_the_id_of_the_employee_you_would_like_premission_to_message_below">Enter the id of the employee you would like premission to message below</string>
+    <string name="outreach_page">Outreach Page</string>
+    <string name="back_button">Back Button</string>
 
 
 </resources>
