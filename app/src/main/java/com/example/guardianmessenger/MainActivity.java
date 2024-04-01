@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button messageBtn, LogoutBtn, manageBtn;
+    private Button messageBtn, LogoutBtn, manageBtn, reqChatLogBtn;
 
     @Override
     protected void onStart() {
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         messageBtn = findViewById(R.id.message_button);
+        reqChatLogBtn = findViewById(R.id.request_chat_logs);
         manageBtn = findViewById(R.id.manage_button);
         LogoutBtn = findViewById(R.id.logout_button);
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +66,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ManageAccountActivity.class);
+                startActivity(i);
+            }
+        });
+
+        // request chat logs button listener
+        reqChatLogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, RequestChatLogActivity.class);
                 startActivity(i);
             }
         });
