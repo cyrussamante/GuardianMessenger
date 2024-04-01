@@ -3,12 +3,16 @@ package com.example.guardianmessenger.utils;
 import com.google.firebase.Timestamp;
 
 import java.util.List;
+import com.example.guardianmessenger.kdc.KDCController;
+import javax.crypto.SecretKey;
 
 public class ChatModel {
     String chatId;
     List<String> userIds;
     Timestamp lastMsgTime;
     String lastMsg;
+    private SecretKey key;
+    KDCController kdc;
 
     public ChatModel() {
     }
@@ -51,4 +55,6 @@ public class ChatModel {
     public void setLastMsg(String lastMsg) {
         this.lastMsg = lastMsg;
     }
+
+    public void setChatKey() { this.key = kdc.createKey();}
 }
