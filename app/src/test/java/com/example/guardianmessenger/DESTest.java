@@ -6,31 +6,26 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.example.guardianmessenger.encryption.DES;
+import com.example.guardianmessenger.kdc.KDCController;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 public class DESTest {
 
     DES des;
-    KeyGenerator kg;
+    KDCController kdc;
     @Before
     public void testInitialization() {
         des = new DES();
-        try {
-            kg = KeyGenerator.getInstance("DES");
-        } catch (Exception e) {
-            System.out.println("Key generator error.");
-        }
+        kdc = new KDCController();
     }
     @Test
     public void encryptDecryptMessageTest(){
-        SecretKey key = kg.generateKey();
+        SecretKey key = kdc.createKey();
         System.out.println(key);
         String message = "hello";
         byte[] encrypted = des.encrypt(key, message);
         String decrypted = des.decrypt(key, encrypted);
         assertEquals(message, decrypted);
-
     }
 }

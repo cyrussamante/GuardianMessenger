@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button messageBtn, LogoutBtn, manageBtn, massBtn;
+    private Button messageBtn, LogoutBtn, manageBtn, massBtn, reqChatLogBtn;
     private LinearLayout massMessageWindow;
     private TextView massMessage;
 
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         massMessageWindow = findViewById(R.id.massMsgWindow);
         messageBtn = findViewById(R.id.message_button);
+        reqChatLogBtn = findViewById(R.id.request_chat_logs);
         manageBtn = findViewById(R.id.manage_button);
         massBtn = findViewById(R.id.mass_message_button);
         massMessage = findViewById(R.id.massMsgText);
@@ -74,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ManageAccountActivity.class);
+                startActivity(i);
+            }
+        });
+
+        // request chat logs button listener
+        reqChatLogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, RequestChatLogActivity.class);
                 startActivity(i);
             }
         });
