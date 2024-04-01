@@ -1,9 +1,8 @@
 package com.example.guardianmessenger;
 
-import static com.example.guardianmessenger.R.*;
+import static com.example.guardianmessenger.R.id.*;
 import static com.example.guardianmessenger.accounts.EmployeeDB.getDB;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +29,6 @@ public class OutreachActivity extends AppCompatActivity {
     EmployeeDB employeeDB;
 
 
-    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.outreach_screen);
@@ -40,7 +38,7 @@ public class OutreachActivity extends AppCompatActivity {
         employeeDB = getDB();
         //Fix these lines
         employee = findViewById(R.id.employee_id);
-        submitRequest = findViewById(R.id.submit_button);
+        submitRequest = findViewById(R.id.button_button);
 
         submitRequest.setOnClickListener(new View.OnClickListener() {
             @Override
