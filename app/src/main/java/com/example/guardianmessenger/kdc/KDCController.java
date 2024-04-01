@@ -1,6 +1,6 @@
 package com.example.guardianmessenger.kdc;
 
-import com.example.guardianmessenger.accounts.Employee;
+import com.example.guardianmessenger.utils.UserModel;
 import javax.crypto.SecretKey;
 import javax.crypto.KeyGenerator;
 import java.util.Set;
@@ -11,18 +11,18 @@ public class KDCController {
     public KDCController() {
         this.keyDB = new KeyDB();
     }
-    public void registerEmployee(Employee employee) {
+    public void registerEmployee(UserModel employee) {
         if (getKey(employee) == null) {
             SecretKey key = createKey();
             keyDB.updateUserKey(employee, key);
         }
     }
 
-    public SecretKey getKey(Employee employee) {
+    public SecretKey getKey(UserModel employee) {
         return keyDB.getUserKey(employee);
     }
 
-    public SecretKey getSessionKey(Employee employee, SecretKey userKey) {
+    public SecretKey getSessionKey(UserModel employee, SecretKey userKey) {
         if (userKey != getKey(employee)) {
             return null;
         }
@@ -31,8 +31,8 @@ public class KDCController {
 
     public void refreshAllKeys() {
         //TODO: refresh session keys
-        Set<Employee> employees = keyDB.getEmployees();
-        for (Employee employee : employees) {
+        Set<UserModel> employees = keyDB.getEmployees();
+        for (UserModel employee : employees) {
             keyDB.updateUserKey(employee, createKey());
         }
     }
@@ -46,12 +46,12 @@ public class KDCController {
         } catch (Exception e) {return null;}
     }
 
-    public void establishSessionKey(Set<Employee> participants) {
-        for (Employee participant : participants) {
+    public void establishSessionKey(Set<UserModel> participants) {
+        for (UserModel participant : participants) {
             //check if they're authenticated
         }
         SecretKey sessionKey = createKey();
-        for (Employee participant : participants) {
+        for (UserModel participant : participants) {
             keyDB.updateSessionKey(participant, sessionKey);
         }
     }
