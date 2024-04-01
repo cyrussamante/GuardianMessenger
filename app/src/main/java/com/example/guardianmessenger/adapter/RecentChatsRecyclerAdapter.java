@@ -19,8 +19,6 @@ import com.example.guardianmessenger.utils.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import java.text.SimpleDateFormat;
-
 public class RecentChatsRecyclerAdapter extends FirestoreRecyclerAdapter<ChatModel, RecentChatsRecyclerAdapter.ChatModelViewHolder> {
 
     Context context;
@@ -31,7 +29,7 @@ public class RecentChatsRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMod
 
     @Override
     protected void onBindViewHolder(@NonNull ChatModelViewHolder holder, int i, @NonNull ChatModel model) {
-        FirebaseUtils.getOtherUser(model.getUserIds()).get().addOnCompleteListener(task -> {
+        FirebaseUtils.getOtherUsers(model.getUserIds()).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 UserModel otherUserModel = task.getResult().toObject(UserModel.class);
                 holder.userNameText.setText(otherUserModel.getName());

@@ -1,14 +1,9 @@
 package com.example.guardianmessenger.utils;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-
-import com.example.guardianmessenger.LoginActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -82,12 +77,16 @@ public class FirebaseUtils {
         return FirebaseFirestore.getInstance().collection("chats");
     }
 
-    public static DocumentReference getOtherUser(List<String> userIds){
+    public static DocumentReference getOtherUsers(List<String> userIds){
         if (userIds.get(0).equals(FirebaseUtils.currentUserId())){
             return allUsersCollectionReference().document(userIds.get(1));
         }else {
             return allUsersCollectionReference().document(userIds.get(0));
         }
+    }
+
+    public static DocumentReference getOtherUser(String userId) {
+        return allUsersCollectionReference().document(userId);
     }
 
     public static String timestampToString(Timestamp timestamp){
