@@ -19,8 +19,10 @@
     <string name="manage_account">Manage Account</string>
     <string name="update_acct">Update Account</string>
     <string name="delete_acct">Delete Account</string>
-
-
+    <string name="search_users">Search Users</string>
+    <string name="send_mass_message">Send Mass Message</string>
+    <string name="submit_mass_message">Submit Mass Message</string>
+    <string name="remove_mass_message">Remove Mass Message</string>
 
 
 

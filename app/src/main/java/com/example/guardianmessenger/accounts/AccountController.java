@@ -1,11 +1,8 @@
 package com.example.guardianmessenger.accounts;
 
-import com.example.guardianmessenger.RegisterActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.*;
 import com.google.firebase.firestore.*;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import android.util.Log;

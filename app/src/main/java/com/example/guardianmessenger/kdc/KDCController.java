@@ -3,6 +3,7 @@ package com.example.guardianmessenger.kdc;
 import com.example.guardianmessenger.accounts.Employee;
 import javax.crypto.SecretKey;
 import javax.crypto.KeyGenerator;
+import java.util.Set;
 
 public class KDCController {
     private KeyDB keyDB;
@@ -11,19 +12,29 @@ public class KDCController {
         this.keyDB = new KeyDB();
     }
     public void registerEmployee(Employee employee) {
-        //TODO
-        if (keyDB.getKey(employee) == null) {
+        if (getKey(employee) == null) {
             SecretKey key = createKey();
-            updateKey(employee, key);
+            keyDB.updateUserKey(employee, key);
         }
     }
 
     public SecretKey getKey(Employee employee) {
-        return keyDB.getKey(employee);
+        return keyDB.getUserKey(employee);
     }
 
-    public void updateKey(Employee employee, SecretKey key) {
-        keyDB.updateKey(employee, key);
+    public SecretKey getSessionKey(Employee employee, SecretKey userKey) {
+        if (userKey != getKey(employee)) {
+            return null;
+        }
+        return keyDB.getSessionKey(employee);
+    }
+
+    public void refreshAllKeys() {
+        //TODO: refresh session keys
+        Set<Employee> employees = keyDB.getEmployees();
+        for (Employee employee : employees) {
+            keyDB.updateUserKey(employee, createKey());
+        }
     }
 
     public SecretKey createKey() {
@@ -34,4 +45,15 @@ public class KDCController {
             return key;
         } catch (Exception e) {return null;}
     }
+
+    public void establishSessionKey(Set<Employee> participants) {
+        for (Employee participant : participants) {
+            //check if they're authenticated
+        }
+        SecretKey sessionKey = createKey();
+        for (Employee participant : participants) {
+            keyDB.updateSessionKey(participant, sessionKey);
+        }
+    }
+
 }
