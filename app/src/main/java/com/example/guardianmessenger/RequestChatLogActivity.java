@@ -82,6 +82,8 @@ public class RequestChatLogActivity extends AppCompatActivity {
 
     }
 
+    // WIP below
+
     private void fetchChatLogs() {
 
         // get values from fields

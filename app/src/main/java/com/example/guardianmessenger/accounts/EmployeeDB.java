@@ -6,6 +6,10 @@ import java.util.Set;
 public class EmployeeDB {
     private Set<Employee> db = new HashSet<>();
 
+    public static EmployeeDB getDB() {
+        return new EmployeeDB();
+    }
+
     public void addEmployee(Employee employee) {
         db.add(employee);
     }

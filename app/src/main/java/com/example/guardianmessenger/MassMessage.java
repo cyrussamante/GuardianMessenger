@@ -1,0 +1,76 @@
+package com.example.guardianmessenger;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.example.guardianmessenger.messaging.MassMessageController;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
+public class MassMessage extends AppCompatActivity {
+
+    private ImageButton backButton;
+    private Button submitButton, removeButton;
+    private EditText massMessageField;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_mass_message);
+
+        removeButton = findViewById(R.id.removeButton);
+        submitButton = findViewById(R.id.submitButton);
+        backButton = findViewById(R.id.back_button);
+        massMessageField = findViewById(R.id.massMessageField);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        // back button listener
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MassMessage.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+        // submit button listener
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MassMessageController.setMassMessage(String.valueOf(massMessageField.getText()));
+                Toast.makeText(MassMessage.this, "Mass Message Sent", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // remove button listener
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MassMessageController.setMassMessage("");
+                Toast.makeText(MassMessage.this, "Mass Message Removed", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+}

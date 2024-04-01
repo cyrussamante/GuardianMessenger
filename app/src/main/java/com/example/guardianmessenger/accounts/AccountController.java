@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 
 public class AccountController {
 
-    private EmployeeDB employeeDB;
+    public EmployeeDB employeeDB;
 
     public AccountController(EmployeeDB db) {
         this.employeeDB = db;
@@ -26,6 +26,10 @@ public class AccountController {
     public EmployeeInfo getEmployeeInfo(String employeeID) {
         Employee employee = employeeDB.getEmployee(employeeID);
         return new EmployeeInfo(employee.getInfo());
+    }
+
+    public Employee getEmployeeById(String employeeID) {
+        return employeeDB.getEmployee(employeeID);
     }
 
 
