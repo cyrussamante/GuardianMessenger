@@ -39,12 +39,6 @@ public class MassMessage extends AppCompatActivity {
         backButton = findViewById(R.id.back_button);
         massMessageField = findViewById(R.id.massMessageField);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
         // back button listener
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
