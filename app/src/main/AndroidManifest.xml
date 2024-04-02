@@ -13,6 +13,9 @@
         android:theme="@style/Theme.GuardianMessenger"
         tools:targetApi="31">
         <activity
+            android:name=".OutreachActivity"
+            android:exported="false" />
+        <activity
             android:name=".RequestChatLogActivity"
             android:exported="false" />
         <activity

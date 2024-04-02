@@ -12,9 +12,6 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.guardianmessenger.messaging.MassMessageController;
 import com.example.guardianmessenger.utils.FirebaseUtils;
@@ -51,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         massBtn = findViewById(R.id.mass_message_button);
         massMessage = findViewById(R.id.massMsgText);
         LogoutBtn = findViewById(R.id.logout_button);
+        outreachBtn = findViewById(R.id.request_outreach_button);
 
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //outreach button listener
-        outreachBtn = findViewById(R.id.request_outreach_button);
+        //outreach
         outreachBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
