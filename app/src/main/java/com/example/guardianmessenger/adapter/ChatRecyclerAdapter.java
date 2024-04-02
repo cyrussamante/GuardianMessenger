@@ -1,7 +1,6 @@
 package com.example.guardianmessenger.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.guardianmessenger.ChatActivity;
 import com.example.guardianmessenger.R;
-import com.example.guardianmessenger.utils.AndroidUtils;
-import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.example.guardianmessenger.utils.ChatMessageModel;
+import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-
-import org.w3c.dom.Text;
 
 public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, ChatRecyclerAdapter.ChatMessageModelViewHolder> {
 
