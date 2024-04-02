@@ -5,13 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-public class HomeScreen extends AppCompatActivity {
+public class HomeScreenActivity extends AppCompatActivity {
     Button createChat;
 
     @Override
@@ -22,7 +18,7 @@ public class HomeScreen extends AppCompatActivity {
         createChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeScreen.this,CreateChat.class));
+                startActivity(new Intent(HomeScreenActivity.this, CreateChatActivity.class));
             }
         });
     }

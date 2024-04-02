@@ -1,6 +1,7 @@
 package com.example.guardianmessenger.messaging;
 
 import com.google.firebase.Timestamp;
+
 import java.util.HashSet;
 
 public class Message {

@@ -23,6 +23,16 @@
     <string name="send_mass_message">Send Mass Message</string>
     <string name="submit_mass_message">Submit Mass Message</string>
     <string name="remove_mass_message">Remove Mass Message</string>
+    <string name="name">Name</string>
+    <string name="position">Position</string>
+    <string name="department">Department</string>
+    <string name="salary">Salary</string>
+    <string name="age">Age</string>
+
+
+
+
+
 
 
 

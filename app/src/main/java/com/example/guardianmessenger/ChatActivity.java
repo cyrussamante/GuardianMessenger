@@ -7,17 +7,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guardianmessenger.adapter.ChatRecyclerAdapter;
-import com.example.guardianmessenger.adapter.SearchUserRecyclerAdapter;
 import com.example.guardianmessenger.utils.AndroidUtils;
 import com.example.guardianmessenger.utils.ChatMessageModel;
 import com.example.guardianmessenger.utils.ChatModel;
@@ -27,11 +22,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
 
-import java.sql.Time;
 import java.util.Arrays;
 
 public class ChatActivity extends AppCompatActivity {
