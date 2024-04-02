@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         massBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, MassMessage.class);
+                Intent i = new Intent(MainActivity.this, MassMessageActivity.class);
                 startActivity(i);
             }
         });

@@ -49,7 +49,7 @@ public class MessageActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MessageActivity.this, CreateChat.class));
+                startActivity(new Intent(MessageActivity.this, CreateChatActivity.class));
             }
         });
 

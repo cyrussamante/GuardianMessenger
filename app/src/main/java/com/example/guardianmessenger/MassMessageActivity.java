@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guardianmessenger.messaging.MassMessageController;
 
-public class MassMessage extends AppCompatActivity {
+public class MassMessageActivity extends AppCompatActivity {
 
     private ImageButton backButton;
     private Button submitButton, removeButton;
@@ -34,7 +34,7 @@ public class MassMessage extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MassMessage.this, MainActivity.class);
+                Intent i = new Intent(MassMessageActivity.this, MainActivity.class);
                 startActivity(i);
             }
         });
@@ -44,7 +44,7 @@ public class MassMessage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MassMessageController.setMassMessage(String.valueOf(massMessageField.getText()));
-                Toast.makeText(MassMessage.this, "Mass Message Sent", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MassMessageActivity.this, "Mass Message Sent", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -53,7 +53,7 @@ public class MassMessage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MassMessageController.setMassMessage("");
-                Toast.makeText(MassMessage.this, "Mass Message Removed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MassMessageActivity.this, "Mass Message Removed", Toast.LENGTH_SHORT).show();
 
             }
         });

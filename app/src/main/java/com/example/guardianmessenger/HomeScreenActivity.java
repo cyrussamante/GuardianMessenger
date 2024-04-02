@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class HomeScreen extends AppCompatActivity {
+public class HomeScreenActivity extends AppCompatActivity {
     Button createChat;
 
     @Override
@@ -18,7 +18,7 @@ public class HomeScreen extends AppCompatActivity {
         createChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeScreen.this,CreateChat.class));
+                startActivity(new Intent(HomeScreenActivity.this, CreateChatActivity.class));
             }
         });
     }

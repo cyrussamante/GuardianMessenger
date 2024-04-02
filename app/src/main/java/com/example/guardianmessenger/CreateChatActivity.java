@@ -16,7 +16,7 @@ import com.example.guardianmessenger.utils.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
-public class CreateChat extends AppCompatActivity {
+public class CreateChatActivity extends AppCompatActivity {
 
     EditText searchInput;
     ImageButton searchButton, backButton;
@@ -47,7 +47,7 @@ public class CreateChat extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CreateChat.this,MessageActivity.class));
+                startActivity(new Intent(CreateChatActivity.this,MessageActivity.class));
             }
         });
 
