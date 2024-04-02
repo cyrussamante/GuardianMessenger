@@ -1,9 +1,10 @@
 package com.example.guardianmessenger.utils;
 
+import com.example.guardianmessenger.kdc.KDCController;
 import com.google.firebase.Timestamp;
 
 import java.util.List;
-import com.example.guardianmessenger.kdc.KDCController;
+
 import javax.crypto.SecretKey;
 
 public class ChatModel {
