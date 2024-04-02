@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button messageBtn, LogoutBtn, manageBtn, massBtn, reqChatLogBtn;
+    private Button messageBtn, LogoutBtn, manageBtn, massBtn, reqChatLogBtn, outreachBtn;
     private LinearLayout massMessageWindow;
     private TextView massMessage;
 
@@ -93,6 +93,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, MassMessage.class);
+                startActivity(i);
+            }
+        });
+
+        //outreach button listener
+        outreachBtn = findViewById(R.id.request_outreach_button);
+        outreachBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, OutreachActivity.class);
                 startActivity(i);
             }
         });
