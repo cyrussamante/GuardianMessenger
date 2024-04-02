@@ -25,7 +25,7 @@ import com.google.firebase.firestore.auth.User;
 public class RegisterActivity extends AppCompatActivity {
     private Button btnCreate;
     private ImageButton backButton;
-    private EditText registrationEmail, registrationPassword;
+    private EditText registrationName, registrationEmail, registrationPassword;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         setContentView(R.layout.register_screen);
         mAuth = FirebaseAuth.getInstance();
+        registrationName= findViewById(R.id.name);
         registrationEmail = findViewById(R.id.email_id);
+
         registrationPassword = findViewById(R.id.password);
         backButton = findViewById(R.id.back_button);
         btnCreate = findViewById(R.id.registerButton);
@@ -42,11 +44,12 @@ public class RegisterActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email, password;
+                String name, email, password;
+                name = registrationName.getText().toString();
                 email = registrationEmail.getText().toString();
                 password = registrationPassword.getText().toString();
-                if (TextUtils.isEmpty(email)||TextUtils.isEmpty(password)){
-                    Toast.makeText(RegisterActivity.this, "Email or Password is empty", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(email)||TextUtils.isEmpty(password)|| TextUtils.isEmpty(name)){
+                    Toast.makeText(RegisterActivity.this, "At least one field is empty", Toast.LENGTH_SHORT).show();
                 }else {
                     mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -74,22 +77,23 @@ public class RegisterActivity extends AppCompatActivity {
 
     void registerUser(String userID){
             String userEmail = registrationEmail.getText().toString();
+            String name = registrationName.getText().toString();
             if (userEmail.isEmpty() ||userEmail.length()<3){
                 registrationEmail.setError("Too short");
                 return;
             }
-
             UserModel userModel = new UserModel(Timestamp.now(),userID, userEmail);
-        FirebaseUtils.getUserDetails().set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this, "Added User Details", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+            userModel.setName(name);
+            FirebaseUtils.getUserDetails().set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        Toast.makeText(RegisterActivity.this, "Added User Details", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
                 }
-            }
-        });
+            });
     }
 }

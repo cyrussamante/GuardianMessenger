@@ -2,8 +2,10 @@ package com.example.guardianmessenger.utils;
 
 import com.google.firebase.Timestamp;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.crypto.SecretKey;
@@ -11,7 +13,7 @@ import javax.crypto.SecretKey;
 public class UserModel {
     private String phoneNumber, name, email, userId, position, department, fcmToken;
 
-    private Set<String> OutreachApprovals;
+    private final List<String> OutreachApprovals = new ArrayList<>();
     private Timestamp createdTimestamp;
     private int age, salary;
 
@@ -24,7 +26,6 @@ public class UserModel {
         this.createdTimestamp = createdTimestamp;
         this.userId = userId;
         this.email = email;
-        this.OutreachApprovals = new HashSet<>();
     }
 
     public Collection<String> getOutreachApprovals() {

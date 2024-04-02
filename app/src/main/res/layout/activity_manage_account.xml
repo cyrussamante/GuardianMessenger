@@ -92,7 +92,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/light_gray"
                 android:ems="10"
-                android:hint="Name"
+                android:hint="@string/name"
                 android:inputType="text"
                 android:textColor="@color/hint_text" />
 
@@ -125,7 +125,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/light_gray"
                 android:ems="10"
-                android:hint="Position"
+                android:hint="@string/position"
                 android:inputType="text"
                 android:textColor="@color/hint_text" />
         </LinearLayout>
@@ -157,7 +157,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/light_gray"
                 android:ems="10"
-                android:hint="Department"
+                android:hint="@string/department"
                 android:inputType="text"
                 android:textColor="@color/hint_text" />
         </LinearLayout>
@@ -190,7 +190,7 @@
                 android:background="@color/light_gray"
                 android:ems="10"
                 android:inputType="number"
-                android:hint="Salary"
+                android:hint="@string/salary"
                 android:textColor="@color/hint_text" />
         </LinearLayout>
 
@@ -223,7 +223,7 @@
                 android:background="@color/light_gray"
                 android:textColor="@color/hint_text"
                 android:inputType="number"
-                android:hint="Age"
+                android:hint="@string/age"
                 android:ems="10" />
 
         </LinearLayout>
