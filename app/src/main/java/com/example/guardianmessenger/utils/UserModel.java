@@ -1,5 +1,7 @@
 package com.example.guardianmessenger.utils;
 
+import android.util.Log;
+
 import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import javax.crypto.SecretKey;
 public class UserModel {
     private String phoneNumber, name, email, userId, position, department, fcmToken;
 
-    private List<String> OutreachApprovals = new ArrayList<>();
+    private List<String> outreachApprovals = new ArrayList<>();
     private Timestamp createdTimestamp;
     private int age, salary;
 
@@ -26,18 +28,25 @@ public class UserModel {
         this.email = email;
     }
 
-    public Collection<String> getOutreachApprovals() {
-        return this.OutreachApprovals;
+    public List<String> getOutreachApprovals() {
+        return outreachApprovals;
     }
 
     public void addOutreach(String employee) {
-        if (OutreachApprovals.contains(employee))
-            return;
-        this.OutreachApprovals.add(employee);
+//        if (outreachApprovals.contains(employee))
+//            return;
+        List<String> temp = new ArrayList<>(outreachApprovals);
+        temp.add(employee);
+        setOutreachApprovals(temp);
+    }
+
+    private void setOutreachApprovals(List<String> outreachApprovals) {
+        this.outreachApprovals = outreachApprovals;
+        Log.e("OutreachController", userId + " Has New outreach: " + outreachApprovals.toString());
     }
 
     public void removeOutreach(String employee) {
-        this.OutreachApprovals.remove(employee);
+        this.outreachApprovals.remove(employee);
     }
     public String getPhoneNumber() {
         return phoneNumber;

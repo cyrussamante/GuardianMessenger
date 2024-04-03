@@ -1,5 +1,7 @@
 package com.example.guardianmessenger;
 
+import static com.example.guardianmessenger.outreach.OutreachController.requestOutreach;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -41,10 +43,9 @@ public class OutreachActivity extends AppCompatActivity {
         submitRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String employeeId = employee.getText().toString();
+                String employeeId = String.valueOf(employee.getText());
                 String currentUser = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                OutreachController controller = new OutreachController();
-                boolean success = controller.requestOutreach(currentUser, employeeId);
+                boolean success = requestOutreach(currentUser, employeeId);
                 if (success) {
                     Toast.makeText(OutreachActivity.this, "Outreach request Approved", Toast.LENGTH_SHORT).show();
                 } else {

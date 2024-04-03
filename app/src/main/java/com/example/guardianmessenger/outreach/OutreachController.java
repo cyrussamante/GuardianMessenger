@@ -1,18 +1,25 @@
 package com.example.guardianmessenger.outreach;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
+import com.example.guardianmessenger.OutreachActivity;
 import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.example.guardianmessenger.utils.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
 
 public class OutreachController {
 
 
-    public boolean requestOutreach(String employee_id1, String employee_id2) {
+    public static boolean requestOutreach(String employee_id1, String employee_id2) {
         //TODO: request outreach approval from manager
         boolean approved = true; // for now, assume all requests are approved
         if (approved) {
@@ -22,42 +29,49 @@ public class OutreachController {
         }
     }
 
-    private boolean approveOutreach(String employee1, String employee2) {
-        addOutreach(employee1, employee2);
+    private static boolean approveOutreach(String employee1, String employee2) {
+        try {
+            addOutreach(employee1, employee2);
+        } catch (Exception e) {
+            return false;
+        }
         return true;
     }
 
-    private boolean rejectOutreach(String employee1, String employee2) {
+    private static boolean rejectOutreach(String employee1, String employee2) {
         return false;
     }
 
-    private void addOutreach(String employee1, String employee2) {
-        DocumentReference currentUser = FirebaseUtils.getOtherUser(employee1);
-        currentUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        UserModel user = document.toObject(UserModel.class);
-                        assert user != null;
-                        user.addOutreach(employee2);
-                    }
+    private static void addOutreach(String employee1, String employee2) {
+        DocumentReference currentUser = FirebaseFirestore.getInstance().collection("users").document(employee1);
+        currentUser.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    UserModel user = document.toObject(UserModel.class);
+                    user.addOutreach(employee2);
+                    FirebaseUtils.getUserDetails(employee1).set(user);
+                } else {
+                    throw new IllegalArgumentException("User does not exist");
                 }
+            } else {
+                throw new IllegalArgumentException("Task failed");
             }
         });
-        DocumentReference otherUser = FirebaseUtils.getOtherUser(employee2);
-        otherUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        UserModel user = document.toObject(UserModel.class);
-                        assert user != null;
-                        user.addOutreach(employee1);
-                    }
+
+        DocumentReference otherUser = FirebaseFirestore.getInstance().collection("users").document(employee2);
+        otherUser.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    UserModel user = document.toObject(UserModel.class);
+                    user.addOutreach(employee1);
+                    FirebaseUtils.getUserDetails(employee2).set(user);
+                } else {
+                    throw new IllegalArgumentException("User does not exist");
                 }
+            } else {
+                throw new IllegalArgumentException("Task failed");
             }
         });
     }

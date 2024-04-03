@@ -29,6 +29,10 @@ public class FirebaseUtils {
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId());
     }
 
+    public static DocumentReference getUserDetails(String userId){
+        return FirebaseFirestore.getInstance().collection("users").document(userId);
+    }
+
     public static CollectionReference allUsersCollectionReference(){
         return FirebaseFirestore.getInstance().collection("users");
     }
@@ -83,10 +87,6 @@ public class FirebaseUtils {
         }else {
             return allUsersCollectionReference().document(userIds.get(0));
         }
-    }
-
-    public static DocumentReference getOtherUser(String userId) {
-        return allUsersCollectionReference().document(userId);
     }
 
     public static String timestampToString(Timestamp timestamp){
