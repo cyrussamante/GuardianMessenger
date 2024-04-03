@@ -14,8 +14,9 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.guardianmessenger.accounts.AccountController;
 import com.example.guardianmessenger.utils.FirebaseUtils;
-
+import com.example.guardianmessenger.utils.SessionController;
 
 
 public class ManageAccountActivity extends AppCompatActivity {
@@ -40,13 +41,8 @@ public class ManageAccountActivity extends AppCompatActivity {
         AccountController accountController = new AccountController(nameField, positionField, departmentField, salaryField, ageField);
 
         // back button listener
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ManageAccountActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
+        SessionController.redirectButton(backButton, ManageAccountActivity.this, MainActivity.class);
+
 
         // update button listener
         updateButton.setOnClickListener(new View.OnClickListener() {

@@ -13,12 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.guardianmessenger.adapter.RecentChatsRecyclerAdapter;
 import com.example.guardianmessenger.utils.ChatModel;
 import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.SessionController;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
 public class MessageActivity extends AppCompatActivity {
-
-    private ImageButton backButton, addButton, searchButton;
 
     RecyclerView recyclerView;
     RecentChatsRecyclerAdapter adapter;
@@ -29,22 +28,16 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
 
         // initializing views
-        backButton = findViewById(R.id.back_button);
-        addButton = findViewById(R.id.add_button);
-        searchButton = findViewById(R.id.search_button);
+        ImageButton backButton = findViewById(R.id.back_button);
+        ImageButton addButton = findViewById(R.id.add_button);
 
         recyclerView = findViewById(R.id.recyler_view);
         setupRecyclerView();
 
 
         // back button listener
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MessageActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
+        SessionController.redirectButton(backButton, MessageActivity.this, MainActivity.class);
+
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

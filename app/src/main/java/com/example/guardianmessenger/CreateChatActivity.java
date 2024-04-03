@@ -2,6 +2,7 @@ package com.example.guardianmessenger;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guardianmessenger.adapter.SearchUserRecyclerAdapter;
 import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.SessionController;
 import com.example.guardianmessenger.utils.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
@@ -33,29 +35,37 @@ public class CreateChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.search_recycler_view);
         searchInput.requestFocus();
 
-        searchButton.setOnClickListener(v ->{
-            String searchTerm = searchInput.getText().toString();
-            if (searchTerm.isEmpty() || searchTerm.length() <2){
-                searchInput.setError("Invalid Term");
-                return;
+        // enter key listener on search input
+        searchInput.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) { // looks for key
+                    searchUser();
+                    return true;
+                }
+                return false;
             }
-
-            setupSearchRecyclerView(searchTerm);
         });
+
+        // search button listener
+        searchButton.setOnClickListener(v ->{searchUser();});
 
         // back button listener
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(CreateChatActivity.this,MessageActivity.class));
-            }
-        });
+        SessionController.redirectButton(backButton, CreateChatActivity.this, MessageActivity.class);
 
     }
 
-    void setupSearchRecyclerView(String searchTerm){
+    private void searchUser() {
+        String searchTerm = searchInput.getText().toString();
+        if (searchTerm.isEmpty() || searchTerm.length() <2){
+            searchInput.setError("Invalid Term");
+            return;
+        }
 
-        Query query = FirebaseUtils.allUsersCollectionReference().whereGreaterThanOrEqualTo("name",searchTerm);
+        setupSearchRecyclerView(searchTerm);
+    }
+
+    void setupSearchRecyclerView(String searchTerm){
+        Query query = FirebaseUtils.allUsersCollectionReference().orderBy("name").startAt(searchTerm.toUpperCase()).endAt(searchTerm.toLowerCase() + "\uf8ff");
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>().setQuery(query,UserModel.class).build();
         adapter = new SearchUserRecyclerAdapter(options,getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -1,6 +1,5 @@
 package com.example.guardianmessenger;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +18,7 @@ import com.example.guardianmessenger.utils.AndroidUtils;
 import com.example.guardianmessenger.utils.ChatMessageModel;
 import com.example.guardianmessenger.utils.ChatModel;
 import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.SessionController;
 import com.example.guardianmessenger.utils.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Timestamp;
@@ -56,13 +56,8 @@ public class RequestChatLogActivity extends AppCompatActivity {
         startDateField = findViewById(R.id.startDateInput);
         endDateField = findViewById(R.id.endDateInput);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(RequestChatLogActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
+        // back button listener
+        SessionController.redirectButton(backButton, RequestChatLogActivity.this, MainActivity.class);
 
         requestButton.setOnClickListener(new View.OnClickListener() {
             @Override

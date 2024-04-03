@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guardianmessenger.messaging.MassMessageController;
 import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.SessionController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -22,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button messageBtn, LogoutBtn, manageBtn, massBtn, reqChatLogBtn, outreachBtn;
     private LinearLayout massMessageWindow;
     private TextView massMessage;
 
@@ -42,15 +42,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         massMessageWindow = findViewById(R.id.massMsgWindow);
-        messageBtn = findViewById(R.id.message_button);
-        reqChatLogBtn = findViewById(R.id.request_chat_logs);
-        manageBtn = findViewById(R.id.manage_button);
-        massBtn = findViewById(R.id.mass_message_button);
+        Button messageBtn = findViewById(R.id.message_button);
+        Button reqChatLogBtn = findViewById(R.id.request_chat_logs);
+        Button manageBtn = findViewById(R.id.manage_button);
+        Button massBtn = findViewById(R.id.mass_message_button);
         massMessage = findViewById(R.id.massMsgText);
-        LogoutBtn = findViewById(R.id.logout_button);
-        outreachBtn = findViewById(R.id.request_outreach_button);
+        Button logoutBtn = findViewById(R.id.logout_button);
+        Button outreachBtn = findViewById(R.id.request_outreach_button);
 
-        LogoutBtn.setOnClickListener(new View.OnClickListener() {
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
@@ -60,49 +60,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // message button listener
-        messageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, MessageActivity.class);
-                startActivity(i);
-            }
-        });
+        SessionController.redirectButton(messageBtn, MainActivity.this, MessageActivity.class);
 
         // manage account button listener
-        manageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, ManageAccountActivity.class);
-                startActivity(i);
-            }
-        });
+        SessionController.redirectButton(manageBtn, MainActivity.this, ManageAccountActivity.class);
 
         // request chat logs button listener
-        reqChatLogBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, RequestChatLogActivity.class);
-                startActivity(i);
-            }
-        });
+        SessionController.redirectButton(reqChatLogBtn, MainActivity.this, RequestChatLogActivity.class);
 
         // mass message button listener
-        massBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, MassMessageActivity.class);
-                startActivity(i);
-            }
-        });
+        SessionController.redirectButton(massBtn, MainActivity.this, MassMessageActivity.class);
 
-        //outreach
-        outreachBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, OutreachActivity.class);
-                startActivity(i);
-            }
-        });
+        // outreach listener
+        SessionController.redirectButton(outreachBtn, MainActivity.this, OutreachActivity.class);
 
         // mass message listener
         MassMessageController.messageDocument.addSnapshotListener(new EventListener<DocumentSnapshot>() {

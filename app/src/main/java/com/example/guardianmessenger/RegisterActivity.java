@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.SessionController;
 import com.example.guardianmessenger.utils.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -65,13 +66,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(i);
-            }
-        });
+        // back button listener
+        SessionController.redirectButton(backButton, RegisterActivity.this, LoginActivity.class);
     }
 
     void registerUser(String userID){
