@@ -87,7 +87,7 @@
         android:layout_marginTop="246dp"
         android:layout_marginEnd="106dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/enter_the_id_of_the_employee_you_would_like_premission_to_message_below"
+        android:text="@string/enter_the_id_of_the_employee_you_would_like_permission_to_message_below"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/employee_id"
         app:layout_constraintEnd_toEndOf="parent"

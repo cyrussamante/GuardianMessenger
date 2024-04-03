@@ -1,6 +1,5 @@
-package com.example.guardianmessenger;
+package com.example.guardianmessenger.accounts;
 
-import android.accounts.Account;
 import android.util.Log;
 import android.widget.EditText;
 
@@ -20,7 +19,7 @@ public class AccountController {
     private String empName, position, department;
     private int salary, empAge;
     private UserModel currentUser;
-    private EditText nameField, positionField, departmentField, salaryField, ageField;
+    private final EditText nameField, positionField, departmentField, salaryField, ageField;
 
     public AccountController(EditText name, EditText pos, EditText dept, EditText sal, EditText age) {
         this.nameField = name;

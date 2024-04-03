@@ -1,11 +1,13 @@
 package com.example.guardianmessenger.kdc;
 
 import com.example.guardianmessenger.utils.UserModel;
+import com.example.guardianmessenger.utils.ChatModel;
 
+import java.util.Base64;
 import java.util.Set;
-
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 public class KDCController {
     private KeyDB keyDB;
@@ -13,6 +15,7 @@ public class KDCController {
     public KDCController() {
         this.keyDB = new KeyDB();
     }
+
     public void registerEmployee(UserModel employee) {
         if (getKey(employee) == null) {
             SecretKey key = createKey();
@@ -24,18 +27,18 @@ public class KDCController {
         return keyDB.getUserKey(employee);
     }
 
-    public SecretKey getSessionKey(UserModel employee, SecretKey userKey) {
-        if (userKey != getKey(employee)) {
-            return null;
-        }
-        return keyDB.getSessionKey(employee);
+    public SecretKey getSessionKey(ChatModel session, SecretKey userKey) {
+        return keyDB.getSessionKey(session);
     }
 
     public void refreshAllKeys() {
-        //TODO: refresh session keys
         Set<UserModel> employees = keyDB.getEmployees();
         for (UserModel employee : employees) {
             keyDB.updateUserKey(employee, createKey());
+        }
+        Set<ChatModel> sessions = keyDB.getSessions();
+        for (ChatModel session : sessions) {
+            keyDB.updateSessionKey(session, createKey());
         }
     }
 
@@ -48,14 +51,18 @@ public class KDCController {
         } catch (Exception e) {return null;}
     }
 
-    public void establishSessionKey(Set<UserModel> participants) {
-        for (UserModel participant : participants) {
-            //check if they're authenticated
-        }
-        SecretKey sessionKey = createKey();
-        for (UserModel participant : participants) {
-            keyDB.updateSessionKey(participant, sessionKey);
-        }
+    public String keyToString(SecretKey key) {
+        byte[] rawData = key.getEncoded();
+        String encodedKey = null;
+        encodedKey = Base64.getEncoder().encodeToString(rawData);
+        return encodedKey;
+    }
+
+    public SecretKey stringToKey(String encodedKey) {
+        byte[] decodedKey = new byte[0];
+        decodedKey = Base64.getDecoder().decode(encodedKey);
+        SecretKey key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "DES");
+        return key;
     }
 
 }
