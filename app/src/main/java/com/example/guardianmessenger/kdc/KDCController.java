@@ -54,17 +54,13 @@ public class KDCController {
     public String keyToString(SecretKey key) {
         byte[] rawData = key.getEncoded();
         String encodedKey = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            encodedKey = Base64.getEncoder().encodeToString(rawData);
-        }
+        encodedKey = Base64.getEncoder().encodeToString(rawData);
         return encodedKey;
     }
 
     public SecretKey stringToKey(String encodedKey) {
         byte[] decodedKey = new byte[0];
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            decodedKey = Base64.getDecoder().decode(encodedKey);
-        }
+        decodedKey = Base64.getDecoder().decode(encodedKey);
         SecretKey key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "DES");
         return key;
     }
