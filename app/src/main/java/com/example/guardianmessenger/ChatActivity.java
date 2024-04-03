@@ -1,6 +1,5 @@
 package com.example.guardianmessenger;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,6 +16,7 @@ import com.example.guardianmessenger.utils.AndroidUtils;
 import com.example.guardianmessenger.utils.ChatMessageModel;
 import com.example.guardianmessenger.utils.ChatModel;
 import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.SessionController;
 import com.example.guardianmessenger.utils.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,11 +28,11 @@ import com.google.firebase.firestore.Query;
 import java.util.Arrays;
 
 public class ChatActivity extends AppCompatActivity {
-    UserModel reciepientModel;
+    UserModel recipientModel;
     ChatRecyclerAdapter adapter;
     EditText messageInput;
     ImageButton sendButton, backButton;
-    TextView reciepientName;
+    TextView recipientName;
     RecyclerView recyclerView;
     String chatId;
     ChatModel chatModel;
@@ -42,20 +42,18 @@ public class ChatActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chat);
 
-        reciepientModel = AndroidUtils.getUserModel(getIntent());
-        chatId = FirebaseUtils.getChatId(FirebaseUtils.currentUserId(),reciepientModel.getUserId());
+        recipientModel = AndroidUtils.getUserModel(getIntent());
+        chatId = FirebaseUtils.getChatId(FirebaseUtils.currentUserId(), recipientModel.getUserId());
 
         messageInput = findViewById(R.id.inputMessage);
         sendButton = findViewById(R.id.sendButton);
-        reciepientName = findViewById(R.id.contactName);
+        recipientName = findViewById(R.id.contactName);
         backButton = findViewById(R.id.backButton);
         recyclerView = findViewById(R.id.chat_recycler_view);
 
-        reciepientName.setText(reciepientModel.getName());
-        backButton.setOnClickListener((v -> {
-            startActivity(new Intent(ChatActivity.this,MessageActivity.class));
-
-        }));
+        recipientName.setText(recipientModel.getName());
+        // back button listener
+        SessionController.redirectButton(backButton, ChatActivity.this, MainActivity.class);
         getChats();
 
         sendButton.setOnClickListener((v -> {
@@ -93,7 +91,7 @@ public class ChatActivity extends AppCompatActivity {
             if(task.isSuccessful()){
                 chatModel = task.getResult().toObject(ChatModel.class);
                 if(chatModel==null){
-                    chatModel = new ChatModel(chatId, Arrays.asList(FirebaseUtils.currentUserId(),reciepientModel.getUserId()), Timestamp.now(),"");
+                    chatModel = new ChatModel(chatId, Arrays.asList(FirebaseUtils.currentUserId(), recipientModel.getUserId()), Timestamp.now(),"");
                     FirebaseUtils.getChatReference(chatId).set(chatModel);
                 }
             }

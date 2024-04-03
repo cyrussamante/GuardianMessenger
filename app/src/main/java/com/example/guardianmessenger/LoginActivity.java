@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private Button loginButton, registerRedirect;
     private EditText userEmail, userPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +27,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_screen);
 
         mAuth = FirebaseAuth.getInstance();
-        loginButton = findViewById(R.id.login_button);
-        registerRedirect = findViewById(R.id.register_button);
+        Button loginButton = findViewById(R.id.login_button);
+        Button registerRedirect = findViewById(R.id.register_button);
         userEmail = findViewById(R.id.email_id);
         userPassword = findViewById(R.id.password);
         loginButton.setOnClickListener(new View.OnClickListener() {

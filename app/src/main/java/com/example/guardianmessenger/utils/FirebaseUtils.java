@@ -33,28 +33,14 @@ public class FirebaseUtils {
         return FirebaseFirestore.getInstance().collection("users");
     }
 
-    // delete user from both user db and authentication db
+    // delete user from both authentication db
     public static void deleteUser(Context context) {
-        getUserDetails().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                removeUserAuth();
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(context, "Account Deletion Successful", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Account Deletion Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public static void removeUserAuth() {
          FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
          if (user != null) {
              user.delete();
          }
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(context, "Account Deletion Successful", Toast.LENGTH_SHORT).show();
     }
 
     public static DocumentReference getChatReference(String chatId){

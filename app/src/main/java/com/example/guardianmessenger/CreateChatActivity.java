@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guardianmessenger.adapter.SearchUserRecyclerAdapter;
 import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.SessionController;
 import com.example.guardianmessenger.utils.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
@@ -46,17 +47,10 @@ public class CreateChatActivity extends AppCompatActivity {
         });
 
         // search button listener
-        searchButton.setOnClickListener(v ->{
-            searchUser();
-        });
+        searchButton.setOnClickListener(v ->{searchUser();});
 
         // back button listener
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(CreateChatActivity.this,MessageActivity.class));
-            }
-        });
+        SessionController.redirectButton(backButton, CreateChatActivity.this, MessageActivity.class);
 
     }
 

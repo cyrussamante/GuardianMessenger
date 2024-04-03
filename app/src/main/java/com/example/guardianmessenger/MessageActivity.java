@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.guardianmessenger.adapter.RecentChatsRecyclerAdapter;
 import com.example.guardianmessenger.utils.ChatModel;
 import com.example.guardianmessenger.utils.FirebaseUtils;
+import com.example.guardianmessenger.utils.SessionController;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
@@ -35,13 +36,8 @@ public class MessageActivity extends AppCompatActivity {
 
 
         // back button listener
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MessageActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
+        SessionController.redirectButton(backButton, MessageActivity.this, MainActivity.class);
+
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

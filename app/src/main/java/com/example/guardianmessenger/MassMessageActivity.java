@@ -1,6 +1,5 @@
 package com.example.guardianmessenger;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +11,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guardianmessenger.messaging.MassMessageController;
+import com.example.guardianmessenger.utils.SessionController;
 
 public class MassMessageActivity extends AppCompatActivity {
 
@@ -29,13 +29,7 @@ public class MassMessageActivity extends AppCompatActivity {
         massMessageField = findViewById(R.id.massMessageField);
 
         // back button listener
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MassMessageActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
+        SessionController.redirectButton(backButton, MassMessageActivity.this, MainActivity.class);
 
         // submit button listener
         submitButton.setOnClickListener(new View.OnClickListener() {
