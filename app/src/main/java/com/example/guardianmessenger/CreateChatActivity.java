@@ -2,6 +2,7 @@ package com.example.guardianmessenger;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -33,14 +34,20 @@ public class CreateChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.search_recycler_view);
         searchInput.requestFocus();
 
-        searchButton.setOnClickListener(v ->{
-            String searchTerm = searchInput.getText().toString();
-            if (searchTerm.isEmpty() || searchTerm.length() <2){
-                searchInput.setError("Invalid Term");
-                return;
+        // enter key listener on search input
+        searchInput.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) { // looks for key
+                    searchUser();
+                    return true;
+                }
+                return false;
             }
+        });
 
-            setupSearchRecyclerView(searchTerm);
+        // search button listener
+        searchButton.setOnClickListener(v ->{
+            searchUser();
         });
 
         // back button listener
@@ -53,9 +60,18 @@ public class CreateChatActivity extends AppCompatActivity {
 
     }
 
-    void setupSearchRecyclerView(String searchTerm){
+    private void searchUser() {
+        String searchTerm = searchInput.getText().toString();
+        if (searchTerm.isEmpty() || searchTerm.length() <2){
+            searchInput.setError("Invalid Term");
+            return;
+        }
 
-        Query query = FirebaseUtils.allUsersCollectionReference().whereGreaterThanOrEqualTo("name",searchTerm);
+        setupSearchRecyclerView(searchTerm);
+    }
+
+    void setupSearchRecyclerView(String searchTerm){
+        Query query = FirebaseUtils.allUsersCollectionReference().orderBy("name").startAt(searchTerm.toUpperCase()).endAt(searchTerm.toLowerCase() + "\uf8ff");
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>().setQuery(query,UserModel.class).build();
         adapter = new SearchUserRecyclerAdapter(options,getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

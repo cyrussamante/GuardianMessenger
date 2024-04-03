@@ -18,8 +18,6 @@ import com.google.firebase.firestore.Query;
 
 public class MessageActivity extends AppCompatActivity {
 
-    private ImageButton backButton, addButton, searchButton;
-
     RecyclerView recyclerView;
     RecentChatsRecyclerAdapter adapter;
     @Override
@@ -29,9 +27,8 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
 
         // initializing views
-        backButton = findViewById(R.id.back_button);
-        addButton = findViewById(R.id.add_button);
-        searchButton = findViewById(R.id.search_button);
+        ImageButton backButton = findViewById(R.id.back_button);
+        ImageButton addButton = findViewById(R.id.add_button);
 
         recyclerView = findViewById(R.id.recyler_view);
         setupRecyclerView();

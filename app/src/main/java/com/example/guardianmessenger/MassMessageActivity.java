@@ -15,8 +15,6 @@ import com.example.guardianmessenger.messaging.MassMessageController;
 
 public class MassMessageActivity extends AppCompatActivity {
 
-    private ImageButton backButton;
-    private Button submitButton, removeButton;
     private EditText massMessageField;
 
     @Override
@@ -25,9 +23,9 @@ public class MassMessageActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_mass_message);
 
-        removeButton = findViewById(R.id.removeButton);
-        submitButton = findViewById(R.id.submitButton);
-        backButton = findViewById(R.id.back_button);
+        Button removeButton = findViewById(R.id.removeButton);
+        Button submitButton = findViewById(R.id.submitButton);
+        ImageButton backButton = findViewById(R.id.back_button);
         massMessageField = findViewById(R.id.massMessageField);
 
         // back button listener
