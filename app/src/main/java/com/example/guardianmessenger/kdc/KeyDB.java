@@ -1,6 +1,7 @@
 package com.example.guardianmessenger.kdc;
 
 import com.example.guardianmessenger.utils.UserModel;
+import com.example.guardianmessenger.utils.ChatModel;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,7 +13,7 @@ import javax.crypto.SecretKey;
 public class KeyDB {
     private Set<SecretKey> keys;
     private Map<UserModel, SecretKey> keyAssignments;
-    private Map<UserModel, SecretKey> sessionKeys;
+    private Map<ChatModel, SecretKey> sessionKeys;
 
     public KeyDB() {
         this.keys = new HashSet<>();
@@ -28,17 +29,19 @@ public class KeyDB {
         keyAssignments.put(employee, newKey);
     }
 
-    public void updateSessionKey(UserModel employee, SecretKey sessionKey) {
-        sessionKeys.put(employee, sessionKey);
+    public void updateSessionKey(ChatModel session, SecretKey sessionKey) {
+        sessionKeys.put(session, sessionKey);
     }
 
-    public SecretKey getSessionKey(UserModel employee) {
-        return sessionKeys.getOrDefault(employee, null);
+    public SecretKey getSessionKey(ChatModel session) {
+        return sessionKeys.getOrDefault(session, null);
     }
 
     public Set<UserModel> getEmployees() {
         return keyAssignments.keySet();
     }
+
+    public Set<ChatModel> getSessions() { return sessionKeys.keySet(); }
 
     public boolean canStoreKey(SecretKey key) {
         return keys.add(key);
