@@ -11,6 +11,7 @@ import android.widget.ImageButton;
  */
 public class SessionController {
 
+    // redirect for an image button
     public static void redirectButton(ImageButton redirectButton, Activity currentActivity, final Class<?> newClass) {
         redirectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -20,6 +21,7 @@ public class SessionController {
         });
     }
 
+    // redirect for a regular button
     public static void redirectButton(Button redirectButton, Activity currentActivity, final Class<?> newClass) {
         redirectButton.setOnClickListener(new View.OnClickListener() {
             @Override
