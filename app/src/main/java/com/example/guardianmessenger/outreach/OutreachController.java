@@ -19,7 +19,10 @@ import java.util.List;
 public class OutreachController {
 
 
-    public static boolean requestOutreach(String employee_id1, String employee_id2) {
+    public static boolean requestOutreach(String employee_id1, String employee_email2) {
+        Log.e("Outreach", "Attempting to convert email to user id");
+        String employee_id2 = FirebaseUtils.emailToUserId(employee_email2);
+        Log.e("Outreach", "Outreach request from " + employee_id1 + " to " + employee_id2 + " initiated");
         //TODO: request outreach approval from manager
         boolean approved = true; // for now, assume all requests are approved
         if (approved) {
@@ -42,7 +45,7 @@ public class OutreachController {
         return false;
     }
 
-    private static void addOutreach(String employee1, String employee2) {
+    private static void addOutreach(String employee1, String employee2) throws IllegalArgumentException {
         DocumentReference currentUser = FirebaseFirestore.getInstance().collection("users").document(employee1);
         currentUser.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

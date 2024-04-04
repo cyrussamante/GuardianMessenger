@@ -33,16 +33,12 @@ public class UserModel {
     }
 
     public void addOutreach(String employee) {
-//        if (outreachApprovals.contains(employee))
-//            return;
-        List<String> temp = new ArrayList<>(outreachApprovals);
-        temp.add(employee);
-        setOutreachApprovals(temp);
-    }
-
-    private void setOutreachApprovals(List<String> outreachApprovals) {
-        this.outreachApprovals = outreachApprovals;
-        Log.e("OutreachController", userId + " Has New outreach: " + outreachApprovals.toString());
+        if (this.outreachApprovals.contains(employee)) {
+            Log.e("Outreach", "Outreach already exists");
+            return;
+        }
+        Log.e("Outreach", "Adding outreach approval for " + employee + " to " + this.userId);
+        this.outreachApprovals.add(employee);
     }
 
     public void removeOutreach(String employee) {

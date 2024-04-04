@@ -1,21 +1,23 @@
 package com.example.guardianmessenger.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 public class FirebaseUtils {
     public static String currentUserId(){
         return FirebaseAuth.getInstance().getUid();
@@ -36,6 +38,25 @@ public class FirebaseUtils {
     public static CollectionReference allUsersCollectionReference(){
         return FirebaseFirestore.getInstance().collection("users");
     }
+
+    public static String emailToUserId(String email) {
+        Log.e("email", FirebaseFirestore.getInstance().collection("users").get().toString());
+//        try {
+//            Task<QuerySnapshot> task = FirebaseFirestore.getInstance().collection("users").whereEqualTo("email", email).get();
+//            Tasks.await(task);
+//            QuerySnapshot querySnapshot = (QuerySnapshot) task.getResult();
+//            if (querySnapshot.isEmpty()) {
+//                return null;
+//            }
+//            return querySnapshot.getDocuments().get(0).getId();
+//        } catch (IndexOutOfBoundsException e) {
+//            return null;
+//        } catch (ExecutionException | InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        return null;
+    }
+
 
     // delete user from both authentication db
     public static void deleteUser(Context context) {

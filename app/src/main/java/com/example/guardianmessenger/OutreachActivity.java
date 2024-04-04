@@ -10,13 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.guardianmessenger.outreach.OutreachController;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
@@ -36,16 +31,16 @@ public class OutreachActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //Fix these lines
-        employee = findViewById(R.id.employee_id);
+        employee = findViewById(R.id.employee_email);
         submitRequest = findViewById(R.id.submit_button);
         goBack = findViewById(R.id.back_button_outreach);
 
         submitRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String employeeId = String.valueOf(employee.getText());
-                String currentUser = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                boolean success = requestOutreach(currentUser, employeeId);
+                String employeeEmail = String.valueOf(employee.getText());
+                String currentUser = mAuth.getCurrentUser().getUid();
+                boolean success = requestOutreach(currentUser, employeeEmail);
                 if (success) {
                     Toast.makeText(OutreachActivity.this, "Outreach request Approved", Toast.LENGTH_SHORT).show();
                 } else {
