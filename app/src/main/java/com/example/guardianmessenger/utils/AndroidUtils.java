@@ -24,18 +24,21 @@ public class AndroidUtils {
 
     }
 
+    //Gets secret key for chat from KDCController
     public static SecretKey getEncryptionKey(){
         KDCController kdcController = new KDCController();
         String encryptionFormat = "aKiGuftdeoU="; //Format for creating keys
         return kdcController.stringToKey(encryptionFormat);
     }
 
+    //Returns a blob with a bytestring
     public static Blob encryptMessage(String message){
         DES des = new DES();
         byte[] encryptedMsg = des.encrypt(getEncryptionKey(),message);
         return Blob.fromBytes(encryptedMsg);
     }
 
+    //Returns Original Message
     public static String decryptMessage(Blob message){
         DES des = new DES();
         byte[] encryptedMsg = message.toBytes();
