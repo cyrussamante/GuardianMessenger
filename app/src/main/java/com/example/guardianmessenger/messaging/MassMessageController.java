@@ -13,21 +13,31 @@ import java.util.Map;
  */
 public class MassMessageController {
 
-    // firebase document containing mass messsage
+    /**
+     * Firebase document containing mass message.
+     */
     public static final DocumentReference messageDocument = FirebaseFirestore.getInstance().collection("mass_message").
             document("current_message");
 
-    // sets desired mass message
+    /**
+     * Sets the desired mass message.
+     * @param sentMsg: Mass message to be sent.
+     */
     public static void setMassMessage(String sentMsg) {
         editMassMessage(sentMsg);
     }
 
-    // clears mass message
+    /**
+     * Removes the current mass message.
+     */
     public static void removeMassMessage() {
         editMassMessage("");
     }
 
-    // uploads mass message to firebase
+    /**
+     * Uploads the mass message to the server.
+     * @param mass_msg: Mass message to be sent.
+     */
     private static void editMassMessage(String mass_msg) {
         Map<String, Object> msgMap = new HashMap<>();
         msgMap.put("msg", mass_msg);
