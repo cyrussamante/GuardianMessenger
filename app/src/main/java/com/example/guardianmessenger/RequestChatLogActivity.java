@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class RequestChatLogActivity extends AppCompatActivity {
     private Button requestButton;
     private EditText nameField, startDateField, endDateField;
     private Date start, end;
-    private String name, senderID, recipientID, chatID;
+    private String senderName, recipientName, senderID, recipientID, chatID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,40 +62,75 @@ public class RequestChatLogActivity extends AppCompatActivity {
         requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                readInput(); // if false fail
+                getSenderName(); // task must finish before string is built
                 fetchChatLogs();
-                Toast.makeText(RequestChatLogActivity.this, "Chat Log Request Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RequestChatLogActivity.this, "Chat Logs Downloaded", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
-    private void readInput() {
+    private boolean readInput() {
         // get values from fields
-        name = String.valueOf(nameField.getText());
+        recipientName = String.valueOf(nameField.getText());
         String startDate = String.valueOf(startDateField.getText());
         String endDate = String.valueOf(endDateField.getText());
-        if (name.isEmpty() || startDate.isEmpty() || endDate.isEmpty())
-            return;
+        if (recipientName.isEmpty() || startDate.isEmpty() || endDate.isEmpty())
+            return false;
         // convert string input date (YYYY/MM/DD) to Date objects
         String[] temp = startDate.split("/");
+        if (!checkDateInputFormat(temp)) return false;
         start = new Date(Integer.parseInt(temp[0]) - 1900, Integer.parseInt(temp[1]) - 1, Integer.parseInt(temp[2]));
         temp = endDate.split("/");
+        if (!checkDateInputFormat(temp)) return false;
         end = new Date(Integer.parseInt(temp[0]) - 1900, Integer.parseInt(temp[1]) - 1, Integer.parseInt(temp[2]));
+        // include end date in date range
+        Calendar c = Calendar.getInstance();
+        c.setTime(end);
+        c.add(Calendar.DATE, 1);
+        end = c.getTime();
+
+        return true;
+    }
+
+    private boolean checkDateInputFormat(String[] elements) {
+        for (String s : elements) {
+            try {
+                Integer.parseInt(s);
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void getSenderName() {
+        Task<DocumentSnapshot> taskFindName = FirebaseUtils.getUserDetails().get();
+        taskFindName.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> taskFindName) {
+                if (taskFindName.isSuccessful()) {
+                    senderName = taskFindName.getResult().getString("name");
+                } else {
+                    // fail
+                }
+            }
+        });
     }
 
     private void fetchChatLogs() {
-        readInput();
         senderID = FirebaseUtils.currentUserId();
         // find userID of recipient
-        Task<QuerySnapshot> taskFindRecipient = FirebaseUtils.allUsersCollectionReference().whereEqualTo("name", name).get();
+        Task<QuerySnapshot> taskFindRecipient = FirebaseUtils.allUsersCollectionReference().whereEqualTo("name", recipientName).get();
         taskFindRecipient.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> taskFindRecipient) {
                 if (taskFindRecipient.isSuccessful()) {
                     List<DocumentSnapshot> queryResult = taskFindRecipient.getResult().getDocuments();
-                    if (queryResult.isEmpty()) return;
+                    if (queryResult.isEmpty()) return; // no name found
                     recipientID = queryResult.get(0).getString("userId");
-                    if (recipientID == null) return;
+                    if (recipientID == null) return; // no name found
                     // get chatID with both userIDs
                     chatID = FirebaseUtils.getChatId(senderID, recipientID);
                     // get chat log data
@@ -105,9 +141,13 @@ public class RequestChatLogActivity extends AppCompatActivity {
                             if (taskFindChatLog.isSuccessful()) {
                                 List<DocumentSnapshot> chatlog = taskFindChatLog.getResult().getDocuments();
                                 writeFile(createChatLogString(chatlog));
+                            } else {
+                                // fail
                             }
                         }
                     });
+                } else {
+                    // fail
                 }
             }
         });
@@ -115,27 +155,23 @@ public class RequestChatLogActivity extends AppCompatActivity {
     }
 
     private String createChatLogString(List<DocumentSnapshot> chatlog) {
+        //while (senderID == null);
         StringBuilder log = new StringBuilder();
-        for (DocumentSnapshot d : chatlog) {
-            // TODO? show employee name instead of ID
-//            String name = "";
-//            Task<DocumentSnapshot> taskFindName = FirebaseUtils.getUserDetails(d.getString("senderId")).get();
-//            taskFindName.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentSnapshot> taskFindName) {
-//                            if (taskFindName.isSuccessful()) {
-//                                name = taskFindName.getResult().getString("name");
-//                            } else {
-//                                Exception e = taskFindName.getException();
-//                            }
-//                        }
-//                    });
-//
-            String msg = AndroidUtils.decryptMessage((Blob) d.get("message"));
-            Date date = ((Timestamp) d.get("timestamp")).toDate();
-            String timestamp = date.toString();
-            // String timestamp = FirebaseUtils.timestampToString((Timestamp) d.get("timestamp")); // alternative date display HH:MM
-            log.append(d.getString("senderId")).append(" (").append(timestamp).append("): ").append(msg).append("\n");
+        if (!chatlog.isEmpty()) {
+            for (DocumentSnapshot d : chatlog) {
+                String name = "";
+                if (d.getString("senderId").equals(senderID))
+                    name = senderName;
+                else
+                    name = recipientName;
+                String msg = AndroidUtils.decryptMessage((Blob) d.get("message"), chatID);
+                Date date = ((Timestamp) d.get("timestamp")).toDate();
+                String timestamp = date.toString();
+                // String timestamp = FirebaseUtils.timestampToString((Timestamp) d.get("timestamp")); // alternative date display HH:MM
+                log.append(name).append(" (").append(timestamp).append("): ").append(msg).append("\n");
+            }
+        } else {
+            log.append("No messages exist between ").append(startDateField.getText()).append(" and ").append(endDateField.getText());
         }
         return log.toString();
     }
