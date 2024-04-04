@@ -22,6 +22,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Blob;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
 
@@ -36,6 +37,7 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     String chatId;
     ChatModel chatModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,10 +101,14 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
     void sendMessage(String message){
+        //Setting Chat metadata
         chatModel.setLastMsg(message);
         chatModel.setLastMsgTime(Timestamp.now());
         FirebaseUtils.getChatReference(chatId).set(chatModel);
-        ChatMessageModel msgModel = new ChatMessageModel(message, FirebaseUtils.currentUserId(), Timestamp.now());
+
+        //Encrypt Message
+        Blob encryptedMsgBlob = AndroidUtils.encryptMessage(message);
+        ChatMessageModel msgModel = new ChatMessageModel(encryptedMsgBlob, FirebaseUtils.currentUserId(), Timestamp.now());
         FirebaseUtils.getChatMessageRef(chatId).add(msgModel).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
