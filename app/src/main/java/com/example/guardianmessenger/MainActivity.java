@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guardianmessenger.messaging.MassMessageController;
+import com.example.guardianmessenger.outreach.OutreachActivity;
 import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.example.guardianmessenger.utils.SessionController;
 import com.google.firebase.auth.FirebaseAuth;
