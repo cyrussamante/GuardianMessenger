@@ -31,6 +31,13 @@ public class AndroidUtils {
         return kdcController.stringToKey(encryptionFormat);
     }
 
+    public static SecretKey getEncryptionKey(String chatId){
+        //TODO: Add firebase stuff
+        KDCController kdcController = new KDCController();
+        String encryptionFormat = "aKiGuftdeoU="; //Format for creating keys
+        return kdcController.stringToKey(encryptionFormat);
+    }
+
     //Returns a blob with a bytestring
     public static Blob encryptMessage(String message){
         DES des = new DES();
@@ -40,6 +47,23 @@ public class AndroidUtils {
 
     //Returns Original Message
     public static String decryptMessage(Blob message){
+        DES des = new DES();
+        byte[] encryptedMsg = message.toBytes();
+        return des.decrypt(getEncryptionKey(),encryptedMsg);
+    }
+
+    //TODO: Fix methods here
+    //IMPORTANT: Use these two methods, even though chatID isn't needed, just pass it, I'll add shit later
+    public static Blob encryptMessage(String message, String chatId){
+        //TODO: getEncryptionKEY() needs an arg
+        DES des = new DES();
+        byte[] encryptedMsg = des.encrypt(getEncryptionKey(),message);
+        return Blob.fromBytes(encryptedMsg);
+    }
+
+    //Returns Original Message
+    public static String decryptMessage(Blob message, String chatId){
+        //TODO: getEncryptionKEY() needs an arg
         DES des = new DES();
         byte[] encryptedMsg = message.toBytes();
         return des.decrypt(getEncryptionKey(),encryptedMsg);
