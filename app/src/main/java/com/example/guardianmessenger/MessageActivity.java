@@ -36,7 +36,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
         // back button listener
-        SessionController.redirectButton(backButton, MessageActivity.this, ChatActivity.class);
+        SessionController.redirectButton(backButton, MessageActivity.this, MainActivity.class);
 
 
         addButton.setOnClickListener(new View.OnClickListener() {

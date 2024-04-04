@@ -85,10 +85,11 @@ public class AccountController {
             salary = Integer.parseInt(String.valueOf(salaryField.getText()));
             currentUser.setSalary(salary);
             empAge = Integer.parseInt(String.valueOf(ageField.getText()));
-            currentUser.setSalary(empAge);
+            currentUser.setAge(empAge);
         } catch (NumberFormatException e) {
             Log.e("MANAGE ACCOUNT", "Invalid number format.");
         }
+
         return currentUser;
     }
 }
