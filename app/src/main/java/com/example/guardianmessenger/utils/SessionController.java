@@ -11,7 +11,12 @@ import android.widget.ImageButton;
  */
 public class SessionController {
 
-    // redirect for an image button
+    /**
+     * Redirects to desired page using an ImageButton.
+     * @param redirectButton: Button to be activated
+     * @param currentActivity: Current page the user is on
+     * @param newClass: Desired class to go to
+     */
     public static void redirectButton(ImageButton redirectButton, Activity currentActivity, final Class<?> newClass) {
         redirectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -21,7 +26,12 @@ public class SessionController {
         });
     }
 
-    // redirect for a regular button
+    /**
+     * Redirects to desired page using a Button.
+     * @param redirectButton: Button to be activated
+     * @param currentActivity: Current page the user is on
+     * @param newClass: Desired class to go to
+     */
     public static void redirectButton(Button redirectButton, Activity currentActivity, final Class<?> newClass) {
         redirectButton.setOnClickListener(new View.OnClickListener() {
             @Override

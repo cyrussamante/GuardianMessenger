@@ -2,6 +2,8 @@ package com.example.guardianmessenger;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -61,17 +63,32 @@ public class ChatActivity extends AppCompatActivity {
         //Gets Chat ref
         getChats();
 
-        sendButton.setOnClickListener((v -> {
-            String msg = messageInput.getText().toString().trim();
-            if (msg.isEmpty()){
-                return;
+        // enter key listener on message input
+        messageInput.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) { // looks for key
+                    deliver();
+                    return true;
+                }
+                return false;
             }
-            sendMessage(msg);
+        });
+
+        sendButton.setOnClickListener((v -> {
+            deliver();
         }));
 
         //Display Chats
         setupChatRecyclerView();
 
+    }
+
+    private void deliver() {
+        String msg = messageInput.getText().toString().trim();
+        if (msg.isEmpty()){
+            return;
+        }
+        sendMessage(msg);
     }
 
     void setupChatRecyclerView(){
