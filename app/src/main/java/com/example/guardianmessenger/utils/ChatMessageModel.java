@@ -1,25 +1,27 @@
 package com.example.guardianmessenger.utils;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Blob;
 
 public class ChatMessageModel {
-    private String message, senderId;
+    private String senderId;
+    private Blob message;
     private Timestamp timestamp;
 
     public ChatMessageModel() {
     }
 
-    public ChatMessageModel(String message, String senderId, Timestamp timestamp) {
+    public ChatMessageModel(Blob message, String senderId, Timestamp timestamp) {
         this.message = message;
         this.senderId = senderId;
         this.timestamp = timestamp;
     }
 
-    public String getMessage() {
+    public Blob getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(Blob message) {
         this.message = message;
     }
 

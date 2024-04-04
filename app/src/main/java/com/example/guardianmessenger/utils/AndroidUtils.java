@@ -1,6 +1,12 @@
 package com.example.guardianmessenger.utils;
 import android.content.Intent;
 
+import com.example.guardianmessenger.encryption.DES;
+import com.example.guardianmessenger.kdc.KDCController;
+import com.google.firebase.firestore.Blob;
+
+import javax.crypto.SecretKey;
+
 
 public class AndroidUtils {
     public static void passUserModel(Intent intent, UserModel model){
@@ -16,5 +22,26 @@ public class AndroidUtils {
         userModel.setUserId(intent.getStringExtra("userId"));
         return userModel;
 
+    }
+
+    //Gets secret key for chat from KDCController
+    public static SecretKey getEncryptionKey(){
+        KDCController kdcController = new KDCController();
+        String encryptionFormat = "aKiGuftdeoU="; //Format for creating keys
+        return kdcController.stringToKey(encryptionFormat);
+    }
+
+    //Returns a blob with a bytestring
+    public static Blob encryptMessage(String message){
+        DES des = new DES();
+        byte[] encryptedMsg = des.encrypt(getEncryptionKey(),message);
+        return Blob.fromBytes(encryptedMsg);
+    }
+
+    //Returns Original Message
+    public static String decryptMessage(Blob message){
+        DES des = new DES();
+        byte[] encryptedMsg = message.toBytes();
+        return des.decrypt(getEncryptionKey(),encryptedMsg);
     }
 }

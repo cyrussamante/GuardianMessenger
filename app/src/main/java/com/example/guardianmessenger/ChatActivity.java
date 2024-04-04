@@ -1,5 +1,6 @@
 package com.example.guardianmessenger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Blob;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
 
@@ -36,6 +38,7 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     String chatId;
     ChatModel chatModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class ChatActivity extends AppCompatActivity {
         recipientModel = AndroidUtils.getUserModel(getIntent());
         chatId = FirebaseUtils.getChatId(FirebaseUtils.currentUserId(), recipientModel.getUserId());
 
+        //Getting UI elements
         messageInput = findViewById(R.id.inputMessage);
         sendButton = findViewById(R.id.sendButton);
         recipientName = findViewById(R.id.contactName);
@@ -53,7 +57,9 @@ public class ChatActivity extends AppCompatActivity {
 
         recipientName.setText(recipientModel.getName());
         // back button listener
-        SessionController.redirectButton(backButton, ChatActivity.this, MainActivity.class);
+        backButton.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this,MainActivity.class)));
+
+        //Gets Chat ref
         getChats();
 
         sendButton.setOnClickListener((v -> {
@@ -64,6 +70,7 @@ public class ChatActivity extends AppCompatActivity {
             sendMessage(msg);
         }));
 
+        //Display Chats
         setupChatRecyclerView();
 
     }
@@ -89,8 +96,10 @@ public class ChatActivity extends AppCompatActivity {
     void getChats(){
         FirebaseUtils.getChatReference(chatId).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
+                //Getting Existing Chat
                 chatModel = task.getResult().toObject(ChatModel.class);
                 if(chatModel==null){
+                    //Creating New Chat
                     chatModel = new ChatModel(chatId, Arrays.asList(FirebaseUtils.currentUserId(), recipientModel.getUserId()), Timestamp.now(),"");
                     FirebaseUtils.getChatReference(chatId).set(chatModel);
                 }
@@ -99,10 +108,14 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
     void sendMessage(String message){
+        //Setting Chat metadata
         chatModel.setLastMsg(message);
         chatModel.setLastMsgTime(Timestamp.now());
         FirebaseUtils.getChatReference(chatId).set(chatModel);
-        ChatMessageModel msgModel = new ChatMessageModel(message, FirebaseUtils.currentUserId(), Timestamp.now());
+
+        //Encrypt Message
+        Blob encryptedMsgBlob = AndroidUtils.encryptMessage(message);
+        ChatMessageModel msgModel = new ChatMessageModel(encryptedMsgBlob, FirebaseUtils.currentUserId(), Timestamp.now());
         FirebaseUtils.getChatMessageRef(chatId).add(msgModel).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {

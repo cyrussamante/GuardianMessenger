@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guardianmessenger.R;
+import com.example.guardianmessenger.utils.AndroidUtils;
 import com.example.guardianmessenger.utils.ChatMessageModel;
 import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -26,14 +27,18 @@ public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageMod
 
     @Override
     protected void onBindViewHolder(@NonNull ChatMessageModelViewHolder holder, int i, @NonNull ChatMessageModel model) {
-       if (model.getSenderId().equals(FirebaseUtils.currentUserId())){
+        //Decrypt Message
+        String message = AndroidUtils.decryptMessage(model.getMessage());
+        if (model.getSenderId().equals(FirebaseUtils.currentUserId())){
+            //Your Messages
            holder.leftChatLayout.setVisibility(View.GONE);
            holder.rightChatLayout.setVisibility(View.VISIBLE);
-           holder.rightChatText.setText(model.getMessage());
+           holder.rightChatText.setText(message);
        }else {
+            //Other User's Messages
            holder.rightChatLayout.setVisibility(View.GONE);
            holder.leftChatLayout.setVisibility(View.VISIBLE);
-           holder.leftChatText.setText(model.getMessage());
+           holder.leftChatText.setText(message);
        }
 
     }
@@ -50,7 +55,7 @@ public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageMod
         TextView leftChatText, rightChatText;
         public ChatMessageModelViewHolder(@NonNull View itemView) {
             super(itemView);
-            
+            //Setting UI Elements
             leftChatLayout = itemView.findViewById(R.id.left_chat_layout);
             rightChatLayout = itemView.findViewById(R.id.right_chat_layout);
             leftChatText = itemView.findViewById(R.id.left_chat_text);
