@@ -23,6 +23,10 @@ public class OutreachController {
         Log.e("Outreach", "Attempting to convert email to user id");
         String employee_id2 = FirebaseUtils.emailToUserId(employee_email2);
         Log.e("Outreach", "Outreach request from " + employee_id1 + " to " + employee_id2 + " initiated");
+        if (employee_id1.equals(employee_id2)) {
+            Log.e("Outreach", "Outreach request to self");
+            return false;
+        }
         //TODO: request outreach approval from manager
         boolean approved = true; // for now, assume all requests are approved
         if (approved) {

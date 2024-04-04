@@ -41,20 +41,23 @@ public class FirebaseUtils {
 
     public static String emailToUserId(String email) {
         Log.e("email", FirebaseFirestore.getInstance().collection("users").get().toString());
-//        try {
-//            Task<QuerySnapshot> task = FirebaseFirestore.getInstance().collection("users").whereEqualTo("email", email).get();
-//            Tasks.await(task);
-//            QuerySnapshot querySnapshot = (QuerySnapshot) task.getResult();
-//            if (querySnapshot.isEmpty()) {
-//                return null;
-//            }
-//            return querySnapshot.getDocuments().get(0).getId();
-//        } catch (IndexOutOfBoundsException e) {
-//            return null;
-//        } catch (ExecutionException | InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-        return null;
+        try {
+            Log.e("email", "emailToUserId: " + email);
+            Task<QuerySnapshot> task = FirebaseFirestore.getInstance().collection("users").whereEqualTo("email", email).get();
+            Log.e("email", "task created");
+            while (!task.isComplete()); // wait for task to complete
+            Log.e("email", "task awaited");
+            QuerySnapshot querySnapshot = (QuerySnapshot) task.getResult();
+            Log.e("email", "querySnapshot created");
+            if (querySnapshot.isEmpty()) {
+                Log.e("email", "querySnapshot empty");
+                return null;
+            }
+            Log.e("email", "querySnapshot not empty");
+            return querySnapshot.getDocuments().get(0).getId();
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
 
