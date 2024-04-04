@@ -1,6 +1,11 @@
 package com.example.guardianmessenger;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -8,38 +13,32 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.guardianmessenger.adapter.ChatRecyclerAdapter;
-import com.example.guardianmessenger.adapter.SearchUserRecyclerAdapter;
 import com.example.guardianmessenger.utils.AndroidUtils;
-import com.example.guardianmessenger.utils.ChatMessageModel;
-import com.example.guardianmessenger.utils.ChatModel;
 import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.example.guardianmessenger.utils.SessionController;
-import com.example.guardianmessenger.utils.UserModel;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Blob;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Arrays;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
+import java.util.List;
 
 public class RequestChatLogActivity extends AppCompatActivity {
 
     private ImageButton backButton;
     private Button requestButton;
     private EditText nameField, startDateField, endDateField;
-    private String name, startDate, endDate;
     private Date start, end;
-    private String chatID;
-    private UserModel sender, recipient;
-    private ChatModel chat;
-    SearchUserRecyclerAdapter searchAdapter;
-    ChatRecyclerAdapter chatAdapter;
-    RecyclerView recyclerView;
+    private String name, senderID, recipientID, chatID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,73 +68,93 @@ public class RequestChatLogActivity extends AppCompatActivity {
 
     }
 
-    // WIP below
-
-    private void fetchChatLogs() {
-
+    private void readInput() {
         // get values from fields
         name = String.valueOf(nameField.getText());
-        startDate = String.valueOf(startDateField.getText());
-        endDate = String.valueOf(endDateField.getText());
+        String startDate = String.valueOf(startDateField.getText());
+        String endDate = String.valueOf(endDateField.getText());
+        if (name.isEmpty() || startDate.isEmpty() || endDate.isEmpty())
+            return;
+        // convert string input date (YYYY/MM/DD) to Date objects
         String[] temp = startDate.split("/");
-        start = new Date(Integer.parseInt(temp[0]), Integer.parseInt(temp[1]), Integer.parseInt(temp[2]));
+        start = new Date(Integer.parseInt(temp[0]) - 1900, Integer.parseInt(temp[1]) - 1, Integer.parseInt(temp[2]));
         temp = endDate.split("/");
-        end = new Date(Integer.parseInt(temp[0]), Integer.parseInt(temp[1]), Integer.parseInt(temp[2]));
-
-        Query query = FirebaseUtils.allUsersCollectionReference().whereGreaterThanOrEqualTo("name", name);
-        FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>().setQuery(query,UserModel.class).build();
-        searchAdapter = new SearchUserRecyclerAdapter(options,getApplicationContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(searchAdapter);
-        searchAdapter.startListening();
-
-        recipient = AndroidUtils.getUserModel(getIntent());
-        chatID = FirebaseUtils.getChatId(FirebaseUtils.currentUserId(),recipient.getUserId());
-
-        //nameField.setText(recipient.getName());
-
-        FirebaseUtils.getChatReference(chatID).get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                chat = task.getResult().toObject(ChatModel.class);
-                if(chat==null){
-                    chat = new ChatModel(chatID, Arrays.asList(FirebaseUtils.currentUserId(),recipient.getUserId()), Timestamp.now(),"");
-                    FirebaseUtils.getChatReference(chatID).set(chat);
-                }
-            }
-
-        });
-
-        setupChatRecyclerView();
+        end = new Date(Integer.parseInt(temp[0]) - 1900, Integer.parseInt(temp[1]) - 1, Integer.parseInt(temp[2]));
     }
 
-    void setupChatRecyclerView(){
-        Query query = FirebaseUtils.getChatMessageRef(chatID).orderBy("timestamp", Query.Direction.DESCENDING).startAt("timestamp", start).endAt("timestamp", end);
-        FirestoreRecyclerOptions<ChatMessageModel> options = new FirestoreRecyclerOptions.Builder<ChatMessageModel>().setQuery(query,ChatMessageModel.class).build();
-        chatAdapter = new ChatRecyclerAdapter(options,getApplicationContext());
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setReverseLayout(true);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(chatAdapter);
-        chatAdapter.startListening();
-        chatAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+    private void fetchChatLogs() {
+        readInput();
+        senderID = FirebaseUtils.currentUserId();
+        // find userID of recipient
+        Task<QuerySnapshot> taskFindRecipient = FirebaseUtils.allUsersCollectionReference().whereEqualTo("name", name).get();
+        taskFindRecipient.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                recyclerView.smoothScrollToPosition(0);
-            }
-        });
-    }
-
-    void getChats(){
-        FirebaseUtils.getChatReference(chatID).get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                chat = task.getResult().toObject(ChatModel.class);
-                if(chat==null){
-                    chat = new ChatModel(chatID, Arrays.asList(FirebaseUtils.currentUserId(),recipient.getUserId()), Timestamp.now(),"");
-                    FirebaseUtils.getChatReference(chatID).set(chat);
+            public void onComplete(@NonNull Task<QuerySnapshot> taskFindRecipient) {
+                if (taskFindRecipient.isSuccessful()) {
+                    List<DocumentSnapshot> queryResult = taskFindRecipient.getResult().getDocuments();
+                    if (queryResult.isEmpty()) return;
+                    recipientID = queryResult.get(0).getString("userId");
+                    if (recipientID == null) return;
+                    // get chatID with both userIDs
+                    chatID = FirebaseUtils.getChatId(senderID, recipientID);
+                    // get chat log data
+                    Task<QuerySnapshot> taskFindChatLog = FirebaseUtils.getChatMessageRef(chatID).orderBy("timestamp", Query.Direction.ASCENDING).whereGreaterThanOrEqualTo("timestamp", new Timestamp(start)).whereLessThanOrEqualTo("timestamp", new Timestamp(end)).get();
+                    taskFindChatLog.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> taskFindChatLog) {
+                            if (taskFindChatLog.isSuccessful()) {
+                                List<DocumentSnapshot> chatlog = taskFindChatLog.getResult().getDocuments();
+                                writeFile(createChatLogString(chatlog));
+                            }
+                        }
+                    });
                 }
             }
-
         });
+
     }
+
+    private String createChatLogString(List<DocumentSnapshot> chatlog) {
+        StringBuilder log = new StringBuilder();
+        for (DocumentSnapshot d : chatlog) {
+            // TODO? show employee name instead of ID
+//            String name = "";
+//            Task<DocumentSnapshot> taskFindName = FirebaseUtils.getUserDetails(d.getString("senderId")).get();
+//            taskFindName.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<DocumentSnapshot> taskFindName) {
+//                            if (taskFindName.isSuccessful()) {
+//                                name = taskFindName.getResult().getString("name");
+//                            } else {
+//                                Exception e = taskFindName.getException();
+//                            }
+//                        }
+//                    });
+//
+            String msg = AndroidUtils.decryptMessage((Blob) d.get("message"));
+            Date date = ((Timestamp) d.get("timestamp")).toDate();
+            String timestamp = date.toString();
+            // String timestamp = FirebaseUtils.timestampToString((Timestamp) d.get("timestamp")); // alternative date display HH:MM
+            log.append(d.getString("senderId")).append(" (").append(timestamp).append("): ").append(msg).append("\n");
+        }
+        return log.toString();
+    }
+
+    private void writeFile(String data) {
+        try {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.MediaColumns.DISPLAY_NAME, "chatlog"); // file name
+            values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain"); // file extension
+            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/Guardian Messenger Chat Logs/");
+
+            Uri uri = getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);
+            OutputStream outputStream = getContentResolver().openOutputStream(uri);
+            outputStream.write(data.getBytes());
+            outputStream.close();
+            //Toast.makeText(view.getContext(), "File created successfully", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            //Toast.makeText(view.getContext(), "Fail to create file", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
