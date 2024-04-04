@@ -21,6 +21,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+/**
+ * 3A04 - Deliverable 4 (T03 - Group 9)
+ * Guardian Messenger
+ * Members: Cyruss Allen Amante, Ali Virk
+ *          Andrew McLaren, Savinay Chhabra, Kate Min
+ *
+ * The main UI of the application once logged in.
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout massMessageWindow;

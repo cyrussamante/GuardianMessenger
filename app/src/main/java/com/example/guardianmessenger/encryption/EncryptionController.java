@@ -2,6 +2,9 @@ package com.example.guardianmessenger.encryption;
 
 import javax.crypto.SecretKey;
 
+/**
+ * Abstraction for Encryption
+ */
 public class EncryptionController {
 
     private final EncryptionAlgorithm ea;

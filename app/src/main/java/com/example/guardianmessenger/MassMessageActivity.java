@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.guardianmessenger.messaging.MassMessageController;
 import com.example.guardianmessenger.utils.SessionController;
 
+/**
+ * Feature: Mass Message UI
+ */
 public class MassMessageActivity extends AppCompatActivity {
 
     private EditText massMessageField;

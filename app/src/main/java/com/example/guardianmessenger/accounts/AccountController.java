@@ -14,6 +14,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Objects;
 
+/**
+ * Feature: Controller for Managing and Updating Accounts
+ */
 public class AccountController {
 
     private String empName, position, department;
@@ -28,6 +31,8 @@ public class AccountController {
         this.salaryField = sal;
         this.ageField = age;
 
+
+        // get current user details and display them on text fields
         DocumentReference user = FirebaseUtils.getUserDetails();
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

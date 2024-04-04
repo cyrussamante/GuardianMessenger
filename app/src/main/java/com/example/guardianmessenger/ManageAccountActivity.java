@@ -18,7 +18,9 @@ import com.example.guardianmessenger.accounts.AccountController;
 import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.example.guardianmessenger.utils.SessionController;
 
-
+/**
+ * Feature: Manage Account UI
+ */
 public class ManageAccountActivity extends AppCompatActivity {
 
     @Override
@@ -54,7 +56,7 @@ public class ManageAccountActivity extends AppCompatActivity {
         });
 
 
-        // delete button listener
+        // delete button listener, ensures confirmation of account deletion
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

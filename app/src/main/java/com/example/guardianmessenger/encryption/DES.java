@@ -5,6 +5,9 @@ import android.util.Log;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 
+/**
+ * Feature: Relates to DES Encryption / Decryption Algorithm
+ */
 public class DES implements EncryptionAlgorithm {
 
     Cipher cipher;

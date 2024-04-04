@@ -5,7 +5,6 @@ import android.util.Log;
 import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.crypto.SecretKey;
@@ -13,7 +12,7 @@ import javax.crypto.SecretKey;
 public class UserModel {
     private String phoneNumber, name, email, userId, position, department, fcmToken;
 
-    private List<String> outreachApprovals = new ArrayList<>();
+    private final List<String> outreachApprovals = new ArrayList<>();
     private Timestamp createdTimestamp;
     private int age, salary;
 

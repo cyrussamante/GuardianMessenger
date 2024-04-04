@@ -17,6 +17,9 @@ import com.example.guardianmessenger.utils.SessionController;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
+/**
+ * Feature: Sending and Receiving Messages
+ */
 public class MessageActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
