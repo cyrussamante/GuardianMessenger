@@ -1,4 +1,4 @@
-package com.example.guardianmessenger;
+package com.example.guardianmessenger.outreach;
 
 import static com.example.guardianmessenger.outreach.OutreachController.requestOutreach;
 
@@ -12,9 +12,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.guardianmessenger.MainActivity;
+import com.example.guardianmessenger.R;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Objects;
 
 public class OutreachActivity extends AppCompatActivity {
 
@@ -30,11 +30,12 @@ public class OutreachActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        //Fix these lines
-        employee = findViewById(R.id.employee_email);
+        employee = findViewById(R.id.employee_email); //employee email input
         submitRequest = findViewById(R.id.submit_button);
         goBack = findViewById(R.id.back_button_outreach);
 
+
+        //submit button listener
         submitRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
