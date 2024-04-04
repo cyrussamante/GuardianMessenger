@@ -17,7 +17,6 @@ import com.example.guardianmessenger.utils.AndroidUtils;
 import com.example.guardianmessenger.utils.ChatMessageModel;
 import com.example.guardianmessenger.utils.ChatModel;
 import com.example.guardianmessenger.utils.FirebaseUtils;
-import com.example.guardianmessenger.utils.SessionController;
 import com.example.guardianmessenger.utils.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;

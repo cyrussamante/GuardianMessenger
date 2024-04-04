@@ -5,7 +5,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,7 +15,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class FirebaseUtils {
 
