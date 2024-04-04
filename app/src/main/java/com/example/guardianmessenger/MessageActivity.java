@@ -17,6 +17,9 @@ import com.example.guardianmessenger.utils.SessionController;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
+/**
+ * Feature: Sending and Receiving Messages
+ */
 public class MessageActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
@@ -36,7 +39,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
         // back button listener
-        SessionController.redirectButton(backButton, MessageActivity.this, ChatActivity.class);
+        SessionController.redirectButton(backButton, MessageActivity.this, MainActivity.class);
 
 
         addButton.setOnClickListener(new View.OnClickListener() {

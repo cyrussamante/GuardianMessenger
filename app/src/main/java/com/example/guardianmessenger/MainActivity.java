@@ -14,12 +14,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.guardianmessenger.messaging.MassMessageController;
+import com.example.guardianmessenger.outreach.OutreachActivity;
 import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.example.guardianmessenger.utils.SessionController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+
+/**
+ * 3A04 - Deliverable 4 (T03 - Group 9)
+ * Guardian Messenger
+ * Members: Cyruss Allen Amante, Ali Virk
+ *          Andrew McLaren, Savinay Chhabra, Kate Min
+ *
+ * The main UI of the application once logged in.
+ */
 
 public class MainActivity extends AppCompatActivity {
 

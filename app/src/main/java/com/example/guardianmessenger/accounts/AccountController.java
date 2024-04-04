@@ -14,6 +14,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Objects;
 
+/**
+ * Feature: Controller for Managing and Updating Accounts
+ */
 public class AccountController {
 
     private String empName, position, department;
@@ -21,6 +24,16 @@ public class AccountController {
     private UserModel currentUser;
     private final EditText nameField, positionField, departmentField, salaryField, ageField;
 
+    /**
+     * Constructor for the account controller.
+     * Initializes the information for the UI to display.
+     *
+     * @param name: input box for name attribute
+     * @param pos: input box for position attribute
+     * @param dept: input box for department attribute
+     * @param sal: input box for salary attribute
+     * @param age: input box for age attribute
+     */
     public AccountController(EditText name, EditText pos, EditText dept, EditText sal, EditText age) {
         this.nameField = name;
         this.positionField = pos;
@@ -28,6 +41,7 @@ public class AccountController {
         this.salaryField = sal;
         this.ageField = age;
 
+        // get current user details and display them on text fields
         DocumentReference user = FirebaseUtils.getUserDetails();
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -54,7 +68,10 @@ public class AccountController {
 
     }
 
-    // update all values within activity
+    /**
+     * Updates the employee attributes from the data within all text fields.
+     * @return the employee model with updated values
+     */
     public UserModel updateValues() {
         // get values from fields
         empName = String.valueOf(nameField.getText());
@@ -85,10 +102,11 @@ public class AccountController {
             salary = Integer.parseInt(String.valueOf(salaryField.getText()));
             currentUser.setSalary(salary);
             empAge = Integer.parseInt(String.valueOf(ageField.getText()));
-            currentUser.setSalary(empAge);
+            currentUser.setAge(empAge);
         } catch (NumberFormatException e) {
             Log.e("MANAGE ACCOUNT", "Invalid number format.");
         }
+
         return currentUser;
     }
 }
