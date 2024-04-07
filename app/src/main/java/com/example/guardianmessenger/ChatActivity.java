@@ -30,6 +30,9 @@ import com.google.firebase.firestore.Query;
 
 import java.util.Arrays;
 
+/**
+ * This screen represents an individual chat activity
+ */
 public class ChatActivity extends AppCompatActivity {
     UserModel recipientModel;
     ChatRecyclerAdapter adapter;
@@ -40,6 +43,14 @@ public class ChatActivity extends AppCompatActivity {
     String chatId;
     ChatModel chatModel;
 
+    /**
+     * Creates the Activity, creates a new chat if one doesn't exist
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +69,7 @@ public class ChatActivity extends AppCompatActivity {
 
         recipientName.setText(recipientModel.getName());
         // back button listener
-        backButton.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this,MainActivity.class)));
+        backButton.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this,MessageActivity.class)));
 
         //Gets Chat ref
         getChats();
@@ -91,6 +102,9 @@ public class ChatActivity extends AppCompatActivity {
         sendMessage(msg);
     }
 
+    /**
+     * Sets up the recycler view
+     */
     void setupChatRecyclerView(){
         Query query = FirebaseUtils.getChatMessageRef(chatId).orderBy("timestamp", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<ChatMessageModel> options = new FirestoreRecyclerOptions.Builder<ChatMessageModel>().setQuery(query,ChatMessageModel.class).build();
@@ -109,6 +123,9 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Gets chat reference if it exists, creates one if it doesn't exist
+     */
     void getChats(){
         FirebaseUtils.getChatReference(chatId).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
@@ -123,6 +140,11 @@ public class ChatActivity extends AppCompatActivity {
 
         });
     }
+
+    /**
+     * Method to encrypt and store message in the chats collection in firebase
+     * @param message the message string that is to be encrypted and stored
+     */
     void sendMessage(String message){
         //Setting Chat metadata
         chatModel.setLastMsg(message);

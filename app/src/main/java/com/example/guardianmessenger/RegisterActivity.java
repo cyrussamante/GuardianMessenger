@@ -22,6 +22,9 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Activity for Registration Page
+ */
 public class RegisterActivity extends AppCompatActivity {
     private Button btnCreate;
     private ImageButton backButton;

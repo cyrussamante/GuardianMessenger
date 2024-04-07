@@ -7,14 +7,26 @@ import com.google.firebase.firestore.Blob;
 
 import javax.crypto.SecretKey;
 
-
+/**
+ * AndroidUtils Class. Includes helpers methods used throughtout the application
+ */
 public class AndroidUtils {
+    /**
+     * Pass a user Model as flags into intent body
+     * @param intent pass the intent which includes flags for the user data
+     * @param model pass the usermodel from which name, phonenumber and userId can be fetched
+     */
     public static void passUserModel(Intent intent, UserModel model){
         intent.putExtra("username", model.getName());
         intent.putExtra("phone",model.getPhoneNumber());
         intent.putExtra("userId",model.getUserId());
     }
 
+    /**
+     *
+     * @param intent pass intent which has flags for name, phoneNumber and UserId
+     * @return UserModel with name, phoneNumber and UserID
+     */
     public static UserModel getUserModel(Intent intent){
         UserModel userModel = new UserModel();
         userModel.setName(intent.getStringExtra("username"));
@@ -24,46 +36,35 @@ public class AndroidUtils {
 
     }
 
-    //Gets secret key for chat from KDCController
+
+    /**
+     * Method to get an encryption key
+     * @return A SecretKey that can be used for encryption
+     */
     public static SecretKey getEncryptionKey(){
         KDCController kdcController = new KDCController();
         String encryptionFormat = "aKiGuftdeoU="; //Format for creating keys
         return kdcController.stringToKey(encryptionFormat);
     }
 
-    public static SecretKey getEncryptionKey(String chatId){
-        //TODO: Add firebase stuff
-        KDCController kdcController = new KDCController();
-        String encryptionFormat = "aKiGuftdeoU="; //Format for creating keys
-        return kdcController.stringToKey(encryptionFormat);
-    }
 
-    //Returns a blob with a bytestring
+    /**
+     * Encrypts a String
+     * @param message the String that needs to be encrypted
+     * @return Blob that contains a bytestring with the encrypted message
+     */
     public static Blob encryptMessage(String message){
         DES des = new DES();
         byte[] encryptedMsg = des.encrypt(getEncryptionKey(),message);
         return Blob.fromBytes(encryptedMsg);
     }
 
-    //Returns Original Message
+    /**
+     * Decrypts a Blob with an encrypted bytestring to an unencrypted String
+     * @param message Blob with bytestring that is the encrypted message
+     * @return String which was the original message
+     */
     public static String decryptMessage(Blob message){
-        DES des = new DES();
-        byte[] encryptedMsg = message.toBytes();
-        return des.decrypt(getEncryptionKey(),encryptedMsg);
-    }
-
-    //TODO: Fix methods here
-    //IMPORTANT: Use these two methods, even though chatID isn't needed, just pass it, I'll add shit later
-    public static Blob encryptMessage(String message, String chatId){
-        //TODO: getEncryptionKEY() needs an arg
-        DES des = new DES();
-        byte[] encryptedMsg = des.encrypt(getEncryptionKey(),message);
-        return Blob.fromBytes(encryptedMsg);
-    }
-
-    //Returns Original Message
-    public static String decryptMessage(Blob message, String chatId){
-        //TODO: getEncryptionKEY() needs an arg
         DES des = new DES();
         byte[] encryptedMsg = message.toBytes();
         return des.decrypt(getEncryptionKey(),encryptedMsg);

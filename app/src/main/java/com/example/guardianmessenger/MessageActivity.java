@@ -18,7 +18,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
 /**
- * Feature: Sending and Receiving Messages
+ * Activity to show all existing messages of a logged in user
  */
 public class MessageActivity extends AppCompatActivity {
 

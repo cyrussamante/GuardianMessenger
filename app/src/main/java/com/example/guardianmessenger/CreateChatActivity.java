@@ -17,6 +17,9 @@ import com.example.guardianmessenger.utils.UserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
+/**
+ * This is the activity for searching for users and creating chats
+ */
 public class CreateChatActivity extends AppCompatActivity {
 
     EditText searchInput;
@@ -24,6 +27,14 @@ public class CreateChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     SearchUserRecyclerAdapter adapter;
+
+    /**
+     * Method to create the activity
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +64,9 @@ public class CreateChatActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Gets search term and calls recylcer view
+     */
     private void searchUser() {
         String searchTerm = searchInput.getText().toString();
         if (searchTerm.isEmpty() || searchTerm.length() <2){
@@ -63,6 +77,10 @@ public class CreateChatActivity extends AppCompatActivity {
         setupSearchRecyclerView(searchTerm);
     }
 
+    /**
+     * Setups recycler views after getting matching users from firebase
+     * @param searchTerm search query for users
+     */
     void setupSearchRecyclerView(String searchTerm){
         Query query = FirebaseUtils.allUsersCollectionReference().orderBy("name").startAt(searchTerm.toUpperCase()).endAt(searchTerm.toLowerCase() + "\uf8ff");
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>().setQuery(query,UserModel.class).build();
@@ -72,6 +90,9 @@ public class CreateChatActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
+    /**
+     * onStart(), onStop(), onResume() are methods to control behaviour of the recycler view
+     */
     @Override
     protected void onStart() {
         super.onStart();

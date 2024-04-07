@@ -9,6 +9,9 @@ import java.util.List;
 
 import javax.crypto.SecretKey;
 
+/**
+ * Class to represent each individual user
+ */
 public class UserModel {
     private String phoneNumber, name, email, userId, position, department, fcmToken;
 
