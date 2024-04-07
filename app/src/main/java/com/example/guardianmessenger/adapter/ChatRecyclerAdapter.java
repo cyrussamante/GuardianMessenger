@@ -12,21 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guardianmessenger.R;
 import com.example.guardianmessenger.utils.AndroidUtils;
-import com.example.guardianmessenger.utils.ChatMessageModel;
+import com.example.guardianmessenger.utils.MessageModel;
 import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, ChatRecyclerAdapter.ChatMessageModelViewHolder> {
+public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<MessageModel, ChatRecyclerAdapter.ChatMessageModelViewHolder> {
 
     Context context;
-    public ChatRecyclerAdapter(@NonNull FirestoreRecyclerOptions<ChatMessageModel> options, Context context) {
+    public ChatRecyclerAdapter(@NonNull FirestoreRecyclerOptions<MessageModel> options, Context context) {
         super(options);
         this.context = context;
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ChatMessageModelViewHolder holder, int i, @NonNull ChatMessageModel model) {
+    protected void onBindViewHolder(@NonNull ChatMessageModelViewHolder holder, int i, @NonNull MessageModel model) {
         //Decrypt Message
         String message = AndroidUtils.decryptMessage(model.getMessage());
         if (model.getSenderId().equals(FirebaseUtils.currentUserId())){

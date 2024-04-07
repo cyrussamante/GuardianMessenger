@@ -10,32 +10,32 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.guardianmessenger.ChatActivity;
+import com.example.guardianmessenger.ChatPage;
 import com.example.guardianmessenger.R;
 import com.example.guardianmessenger.utils.AndroidUtils;
 import com.example.guardianmessenger.utils.FirebaseUtils;
-import com.example.guardianmessenger.utils.UserModel;
+import com.example.guardianmessenger.utils.EmployeeModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserModel, SearchUserRecyclerAdapter.UserModelViewHolder> {
+public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<EmployeeModel, SearchUserRecyclerAdapter.UserModelViewHolder> {
 
     Context context;
-    public SearchUserRecyclerAdapter(@NonNull FirestoreRecyclerOptions<UserModel> options, Context context) {
+    public SearchUserRecyclerAdapter(@NonNull FirestoreRecyclerOptions<EmployeeModel> options, Context context) {
         super(options);
         this.context = context;
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull UserModelViewHolder userModelViewHolder, int i, @NonNull UserModel userModel) {
-        userModelViewHolder.userNameText.setText(userModel.getName());
-        userModelViewHolder.userEmailText.setText(userModel.getEmail());
-        if (userModel.getUserId().equals(FirebaseUtils.currentUserId())){
-            userModelViewHolder.userNameText.setText(userModel.getName()+" [Current User]");
+    protected void onBindViewHolder(@NonNull UserModelViewHolder userModelViewHolder, int i, @NonNull EmployeeModel employeeModel) {
+        userModelViewHolder.userNameText.setText(employeeModel.getName());
+        userModelViewHolder.userEmailText.setText(employeeModel.getEmail());
+        if (employeeModel.getUserId().equals(FirebaseUtils.currentUserId())){
+            userModelViewHolder.userNameText.setText(employeeModel.getName()+" [Current User]");
         }
         userModelViewHolder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ChatActivity.class);
-            AndroidUtils.passUserModel(intent,userModel);
+            Intent intent = new Intent(context, ChatPage.class);
+            AndroidUtils.passUserModel(intent, employeeModel);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });

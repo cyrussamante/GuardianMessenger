@@ -16,31 +16,31 @@
             android:name=".outreach.OutreachActivity"
             android:exported="false" />
         <activity
-            android:name=".RequestChatLogActivity"
+            android:name=".RequestChatLogPage"
             android:exported="false" />
         <activity
-            android:name=".MassMessageActivity"
+            android:name=".MassMessagePage"
             android:exported="false" />
         <activity
-            android:name=".ManageAccountActivity"
+            android:name=".ManageAccountPage"
             android:exported="false" />
         <activity
-            android:name=".MessageActivity"
+            android:name=".MessagesPage"
             android:exported="false" />
         <activity
-            android:name=".CreateChatActivity"
+            android:name=".CreateChatPage"
             android:exported="false" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".ChatPage"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginPage"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".RegistrationPage"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".HomePage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

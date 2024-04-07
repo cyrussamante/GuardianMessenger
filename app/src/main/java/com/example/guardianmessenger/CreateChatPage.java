@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.guardianmessenger.adapter.SearchUserRecyclerAdapter;
 import com.example.guardianmessenger.utils.FirebaseUtils;
 import com.example.guardianmessenger.utils.SessionController;
-import com.example.guardianmessenger.utils.UserModel;
+import com.example.guardianmessenger.utils.EmployeeModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
 /**
  * This is the activity for searching for users and creating chats
  */
-public class CreateChatActivity extends AppCompatActivity {
+public class CreateChatPage extends AppCompatActivity {
 
     EditText searchInput;
     ImageButton searchButton, backButton;
@@ -60,7 +60,7 @@ public class CreateChatActivity extends AppCompatActivity {
         searchButton.setOnClickListener(v ->{searchUser();});
 
         // back button listener
-        SessionController.redirectButton(backButton, CreateChatActivity.this, MessageActivity.class);
+        SessionController.redirectButton(backButton, CreateChatPage.this, MessagesPage.class);
 
     }
 
@@ -83,7 +83,7 @@ public class CreateChatActivity extends AppCompatActivity {
      */
     void setupSearchRecyclerView(String searchTerm){
         Query query = FirebaseUtils.allUsersCollectionReference().orderBy("name").startAt(searchTerm.toUpperCase()).endAt(searchTerm.toLowerCase() + "\uf8ff");
-        FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>().setQuery(query,UserModel.class).build();
+        FirestoreRecyclerOptions<EmployeeModel> options = new FirestoreRecyclerOptions.Builder<EmployeeModel>().setQuery(query, EmployeeModel.class).build();
         adapter = new SearchUserRecyclerAdapter(options,getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);

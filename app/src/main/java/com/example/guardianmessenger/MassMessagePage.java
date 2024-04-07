@@ -16,7 +16,7 @@ import com.example.guardianmessenger.utils.SessionController;
 /**
  * Feature: Mass Message UI
  */
-public class MassMessageActivity extends AppCompatActivity {
+public class MassMessagePage extends AppCompatActivity {
 
     private EditText massMessageField;
 
@@ -39,14 +39,14 @@ public class MassMessageActivity extends AppCompatActivity {
         massMessageField = findViewById(R.id.massMessageField);
 
         // back button listener
-        SessionController.redirectButton(backButton, MassMessageActivity.this, MainActivity.class);
+        SessionController.redirectButton(backButton, MassMessagePage.this, HomePage.class);
 
         // submit button listener
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MassMessageController.setMassMessage(String.valueOf(massMessageField.getText()));
-                Toast.makeText(MassMessageActivity.this, "Mass Message Sent", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MassMessagePage.this, "Mass Message Sent", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -55,7 +55,7 @@ public class MassMessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MassMessageController.setMassMessage("");
-                Toast.makeText(MassMessageActivity.this, "Mass Message Removed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MassMessagePage.this, "Mass Message Removed", Toast.LENGTH_SHORT).show();
 
             }
         });

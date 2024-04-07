@@ -3,7 +3,7 @@ package com.example.guardianmessenger.outreach;
 import android.util.Log;
 
 import com.example.guardianmessenger.utils.FirebaseUtils;
-import com.example.guardianmessenger.utils.UserModel;
+import com.example.guardianmessenger.utils.EmployeeModel;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -48,7 +48,7 @@ public class OutreachController {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    UserModel user = document.toObject(UserModel.class); // convert doc to user object
+                    EmployeeModel user = document.toObject(EmployeeModel.class); // convert doc to user object
                     user.addOutreach(employee2);
                     FirebaseUtils.getUserDetails(employee1).set(user); // update user doc
                 } else {

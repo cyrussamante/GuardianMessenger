@@ -10,12 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.guardianmessenger.ChatActivity;
+import com.example.guardianmessenger.ChatPage;
 import com.example.guardianmessenger.R;
 import com.example.guardianmessenger.utils.AndroidUtils;
 import com.example.guardianmessenger.utils.ChatModel;
 import com.example.guardianmessenger.utils.FirebaseUtils;
-import com.example.guardianmessenger.utils.UserModel;
+import com.example.guardianmessenger.utils.EmployeeModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -31,14 +31,14 @@ public class RecentChatsRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMod
     protected void onBindViewHolder(@NonNull ChatModelViewHolder holder, int i, @NonNull ChatModel model) {
         FirebaseUtils.getOtherUsers(model.getUserIds()).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
-                UserModel otherUserModel = task.getResult().toObject(UserModel.class);
-                holder.userNameText.setText(otherUserModel.getName());
+                EmployeeModel otherEmployeeModel = task.getResult().toObject(EmployeeModel.class);
+                holder.userNameText.setText(otherEmployeeModel.getName());
                 holder.lastMsgText.setText(model.getLastMsg());
                 holder.LastMsgTimeText.setText(FirebaseUtils.timestampToString(model.getLastMsgTime()));
 
                 holder.itemView.setOnClickListener(v -> {
-                    Intent intent = new Intent(context, ChatActivity.class);
-                    AndroidUtils.passUserModel(intent,otherUserModel);
+                    Intent intent = new Intent(context, ChatPage.class);
+                    AndroidUtils.passUserModel(intent, otherEmployeeModel);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 });

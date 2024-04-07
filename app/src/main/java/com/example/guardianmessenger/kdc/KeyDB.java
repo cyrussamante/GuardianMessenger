@@ -1,10 +1,9 @@
 package com.example.guardianmessenger.kdc;
 
 import com.example.guardianmessenger.utils.ChatModel;
-import com.example.guardianmessenger.utils.UserModel;
+import com.example.guardianmessenger.utils.EmployeeModel;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,7 +13,7 @@ import javax.crypto.SecretKey;
  * Feature: Database for KDC
  */
 public class KeyDB {
-    private Map<UserModel, SecretKey> keyAssignments;
+    private Map<EmployeeModel, SecretKey> keyAssignments;
     private Map<ChatModel, SecretKey> sessionKeys;
 
     /**
@@ -30,7 +29,7 @@ public class KeyDB {
      * @param employee: The employee whose key will be retrieved.
      * @return key
      */
-    public SecretKey getUserKey(UserModel employee) {
+    public SecretKey getUserKey(EmployeeModel employee) {
         return keyAssignments.getOrDefault(employee, null);
     }
 
@@ -39,7 +38,7 @@ public class KeyDB {
      * @param employee: The employee whose key will be updated.
      * @param newKey: The new key to be assigned.
      */
-    public void updateUserKey(UserModel employee, SecretKey newKey) {
+    public void updateUserKey(EmployeeModel employee, SecretKey newKey) {
         keyAssignments.put(employee, newKey);
     }
 
@@ -66,7 +65,7 @@ public class KeyDB {
      * gets a list of employees
      * @return set of employees
      */
-    public Set<UserModel> getEmployees() {
+    public Set<EmployeeModel> getEmployees() {
         return keyAssignments.keySet();
     }
 

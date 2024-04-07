@@ -16,7 +16,7 @@ public class AndroidUtils {
      * @param intent pass the intent which includes flags for the user data
      * @param model pass the usermodel from which name, phonenumber and userId can be fetched
      */
-    public static void passUserModel(Intent intent, UserModel model){
+    public static void passUserModel(Intent intent, EmployeeModel model){
         intent.putExtra("username", model.getName());
         intent.putExtra("phone",model.getPhoneNumber());
         intent.putExtra("userId",model.getUserId());
@@ -27,12 +27,12 @@ public class AndroidUtils {
      * @param intent pass intent which has flags for name, phoneNumber and UserId
      * @return UserModel with name, phoneNumber and UserID
      */
-    public static UserModel getUserModel(Intent intent){
-        UserModel userModel = new UserModel();
-        userModel.setName(intent.getStringExtra("username"));
-        userModel.setPhoneNumber(intent.getStringExtra("phone"));
-        userModel.setUserId(intent.getStringExtra("userId"));
-        return userModel;
+    public static EmployeeModel getUserModel(Intent intent){
+        EmployeeModel employeeModel = new EmployeeModel();
+        employeeModel.setName(intent.getStringExtra("username"));
+        employeeModel.setPhoneNumber(intent.getStringExtra("phone"));
+        employeeModel.setUserId(intent.getStringExtra("userId"));
+        return employeeModel;
 
     }
 

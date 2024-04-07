@@ -6,7 +6,7 @@ import com.google.firebase.firestore.Blob;
 /**
  * This class represents an individual message
  */
-public class ChatMessageModel {
+public class MessageModel {
     private String senderId;
     private Blob message;
     private Timestamp timestamp;
@@ -14,7 +14,7 @@ public class ChatMessageModel {
     /**
      * Empty Contructor for Firebase
      */
-    public ChatMessageModel() {
+    public MessageModel() {
     }
 
     /**
@@ -23,7 +23,7 @@ public class ChatMessageModel {
      * @param senderId userId of the sender
      * @param timestamp time stamp that the message was sent
      */
-    public ChatMessageModel(Blob message, String senderId, Timestamp timestamp) {
+    public MessageModel(Blob message, String senderId, Timestamp timestamp) {
         this.message = message;
         this.senderId = senderId;
         this.timestamp = timestamp;

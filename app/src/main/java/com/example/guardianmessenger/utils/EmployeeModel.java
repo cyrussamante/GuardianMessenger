@@ -12,7 +12,7 @@ import javax.crypto.SecretKey;
 /**
  * Class to represent each individual user
  */
-public class UserModel {
+public class EmployeeModel {
     private String phoneNumber, name, email, userId, position, department, fcmToken;
 
     private final List<String> outreachApprovals = new ArrayList<>();
@@ -22,10 +22,10 @@ public class UserModel {
     private SecretKey secretKey;
 
     // Default constructor required for calls to DataSnapshot.getValue(UserModel.class)
-    public UserModel() {
+    public EmployeeModel() {
     }
 
-    public UserModel(Timestamp createdTimestamp, String userId, String email) {
+    public EmployeeModel(Timestamp createdTimestamp, String userId, String email) {
         this.createdTimestamp = createdTimestamp;
         this.userId = userId;
         this.email = email;

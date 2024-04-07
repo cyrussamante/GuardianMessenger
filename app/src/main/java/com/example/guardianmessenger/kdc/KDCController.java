@@ -1,7 +1,7 @@
 package com.example.guardianmessenger.kdc;
 
 import com.example.guardianmessenger.utils.ChatModel;
-import com.example.guardianmessenger.utils.UserModel;
+import com.example.guardianmessenger.utils.EmployeeModel;
 
 import java.util.Base64;
 import java.util.Set;
@@ -27,7 +27,7 @@ public class KDCController {
      * register a new employee into the database and generate their key
      * @param employee: The employee to be registered
      */
-    public void registerEmployee(UserModel employee) {
+    public void registerEmployee(EmployeeModel employee) {
         if (getKey(employee) == null) {
             SecretKey key = createKey();
             keyDB.updateUserKey(employee, key);
@@ -39,7 +39,7 @@ public class KDCController {
      * @param employee: The employee whose key will be retrieved from the database
      * @return key
      */
-    public SecretKey getKey(UserModel employee) {
+    public SecretKey getKey(EmployeeModel employee) {
         return keyDB.getUserKey(employee);
     }
 
@@ -56,8 +56,8 @@ public class KDCController {
      * update all keys in the database
      */
     public void refreshAllKeys() {
-        Set<UserModel> employees = keyDB.getEmployees();
-        for (UserModel employee : employees) {
+        Set<EmployeeModel> employees = keyDB.getEmployees();
+        for (EmployeeModel employee : employees) {
             keyDB.updateUserKey(employee, createKey());
         }
         Set<ChatModel> sessions = keyDB.getSessions();

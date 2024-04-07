@@ -31,7 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
  * The main UI of the application once logged in.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
 
     private LinearLayout massMessageWindow;
     private TextView massMessage;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(!FirebaseUtils.isLoggedIn()){
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            startActivity(new Intent(HomePage.this, LoginPage.class));
             finish();
         }
     }
@@ -64,25 +64,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                Toast.makeText(MainActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                Toast.makeText(HomePage.this, "Logged Out", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(HomePage.this, LoginPage.class));
             }
         });
 
         // message button listener
-        SessionController.redirectButton(messageBtn, MainActivity.this, MessageActivity.class);
+        SessionController.redirectButton(messageBtn, HomePage.this, MessagesPage.class);
 
         // manage account button listener
-        SessionController.redirectButton(manageBtn, MainActivity.this, ManageAccountActivity.class);
+        SessionController.redirectButton(manageBtn, HomePage.this, ManageAccountPage.class);
 
         // request chat logs button listener
-        SessionController.redirectButton(reqChatLogBtn, MainActivity.this, RequestChatLogActivity.class);
+        SessionController.redirectButton(reqChatLogBtn, HomePage.this, RequestChatLogPage.class);
 
         // mass message button listener
-        SessionController.redirectButton(massBtn, MainActivity.this, MassMessageActivity.class);
+        SessionController.redirectButton(massBtn, HomePage.this, MassMessagePage.class);
 
         // outreach listener
-        SessionController.redirectButton(outreachBtn, MainActivity.this, OutreachActivity.class);
+        SessionController.redirectButton(outreachBtn, HomePage.this, OutreachActivity.class);
 
         // mass message listener
         MassMessageController.messageDocument.addSnapshotListener(new EventListener<DocumentSnapshot>() {

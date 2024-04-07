@@ -19,10 +19,10 @@ import java.util.Date;
 /**
  * Based on ChatLogPage boundary class from previous deliverables
  */
-public class RequestChatLogActivity extends AppCompatActivity {
+public class RequestChatLogPage extends AppCompatActivity {
 
     private EditText nameField, startDateField, endDateField;
-    private Date start, end;
+    private Date  start, end;
     private String recipientName;
 
     /**
@@ -47,7 +47,7 @@ public class RequestChatLogActivity extends AppCompatActivity {
         endDateField = findViewById(R.id.endDateInput);
 
         // back button listener
-        SessionController.redirectButton(backButton, RequestChatLogActivity.this, MainActivity.class);
+        SessionController.redirectButton(backButton, RequestChatLogPage.this, HomePage.class);
 
         // request chat logs button listener
         requestButton.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +57,7 @@ public class RequestChatLogActivity extends AppCompatActivity {
                     ChatLogController c = new ChatLogController(recipientName, start, end, v, getContentResolver());
                     c.findChat();
                 } else {
-                    Toast.makeText(RequestChatLogActivity.this, "Invalid information entered", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RequestChatLogPage.this, "Invalid information entered", Toast.LENGTH_SHORT).show();
                 }
             }
         });

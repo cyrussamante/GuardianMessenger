@@ -21,7 +21,7 @@ import com.example.guardianmessenger.utils.SessionController;
 /**
  * Feature: Manage Account UI
  */
-public class ManageAccountActivity extends AppCompatActivity {
+public class ManageAccountPage extends AppCompatActivity {
 
     /**
      * Creates the manage account activity.
@@ -50,7 +50,7 @@ public class ManageAccountActivity extends AppCompatActivity {
         AccountController accountController = new AccountController(nameField, positionField, departmentField, salaryField, ageField);
 
         // back button listener
-        SessionController.redirectButton(backButton, ManageAccountActivity.this, MainActivity.class);
+        SessionController.redirectButton(backButton, ManageAccountPage.this, HomePage.class);
 
 
         // update button listener
@@ -58,7 +58,7 @@ public class ManageAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseUtils.getUserDetails().set(accountController.updateValues());
-                Toast.makeText(ManageAccountActivity.this, "Account Updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ManageAccountPage.this, "Account Updated", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -67,14 +67,14 @@ public class ManageAccountActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ManageAccountActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ManageAccountPage.this);
                 builder.setTitle("Account Deletion Confirmation");
                 builder.setMessage("Are you sure you want to delete your account?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                FirebaseUtils.deleteUser(ManageAccountActivity.this);
-                                startActivity(new Intent(ManageAccountActivity.this, LoginActivity.class));
+                                FirebaseUtils.deleteUser(ManageAccountPage.this);
+                                startActivity(new Intent(ManageAccountPage.this, LoginPage.class));
                             }
                         })
                         .setNegativeButton("No", null).show();

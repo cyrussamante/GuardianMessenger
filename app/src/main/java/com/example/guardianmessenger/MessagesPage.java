@@ -20,7 +20,7 @@ import com.google.firebase.firestore.Query;
 /**
  * Activity to show all existing messages of a logged in user
  */
-public class MessageActivity extends AppCompatActivity {
+public class MessagesPage extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecentChatsRecyclerAdapter adapter;
@@ -39,13 +39,13 @@ public class MessageActivity extends AppCompatActivity {
 
 
         // back button listener
-        SessionController.redirectButton(backButton, MessageActivity.this, MainActivity.class);
+        SessionController.redirectButton(backButton, MessagesPage.this, HomePage.class);
 
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MessageActivity.this, CreateChatActivity.class));
+                startActivity(new Intent(MessagesPage.this, CreateChatPage.class));
             }
         });
 

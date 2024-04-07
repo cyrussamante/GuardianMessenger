@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 /**
  * Activity for the login screen
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginPage extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText userEmail, userPassword;
 
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 password = userPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
-                    Toast.makeText(LoginActivity.this, "Username or Password is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginPage.this, "Username or Password is empty", Toast.LENGTH_SHORT).show();
                 }else {
                     mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -58,11 +58,11 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 //login
                                 String user_id = mAuth.getCurrentUser().getUid();
-                                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                Toast.makeText(LoginPage.this, "Login Success", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(LoginPage.this, HomePage.class));
                             }else{
                                 //failed
-                                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginPage.this, "Login Failed", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         registerRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent i = new Intent(LoginPage.this, RegistrationPage.class);
                 startActivity(i);
             }
         });

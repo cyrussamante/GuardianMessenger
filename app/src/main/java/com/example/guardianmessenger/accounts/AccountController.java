@@ -6,7 +6,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 
 import com.example.guardianmessenger.utils.FirebaseUtils;
-import com.example.guardianmessenger.utils.UserModel;
+import com.example.guardianmessenger.utils.EmployeeModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,7 +21,7 @@ public class AccountController {
 
     private String empName, position, department;
     private int salary, empAge;
-    private UserModel currentUser;
+    private EmployeeModel currentUser;
     private final EditText nameField, positionField, departmentField, salaryField, ageField;
 
     /**
@@ -49,7 +49,7 @@ public class AccountController {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        currentUser = document.toObject(UserModel.class);
+                        currentUser = document.toObject(EmployeeModel.class);
                         empName = currentUser.getName();
                         position = currentUser.getPosition();
                         department = currentUser.getDepartment();
@@ -72,7 +72,7 @@ public class AccountController {
      * Updates the employee attributes from the data within all text fields.
      * @return the employee model with updated values
      */
-    public UserModel updateValues() {
+    public EmployeeModel updateValues() {
         // get values from fields
         empName = String.valueOf(nameField.getText());
         position = String.valueOf(positionField.getText());

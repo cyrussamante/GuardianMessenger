@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.guardianmessenger.MainActivity;
+import com.example.guardianmessenger.HomePage;
 import com.example.guardianmessenger.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -54,7 +54,7 @@ public class OutreachActivity extends AppCompatActivity {
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(OutreachActivity.this, MainActivity.class);
+                Intent i = new Intent(OutreachActivity.this, HomePage.class);
                 startActivity(i);
             }
         });

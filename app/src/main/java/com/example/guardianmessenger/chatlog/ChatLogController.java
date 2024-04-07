@@ -149,7 +149,7 @@ public class ChatLogController {
                 else
                     name = recipientName;
                 // get message contents
-                String msg = AndroidUtils.decryptMessage((Blob) d.get("message"), chatID);
+                String msg = AndroidUtils.decryptMessage((Blob) d.get("message"));
                 // get date
                 Date date = ((Timestamp) d.get("timestamp")).toDate();
                 String timestamp = date.toString();

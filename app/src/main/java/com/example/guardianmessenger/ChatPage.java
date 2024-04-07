@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guardianmessenger.adapter.ChatRecyclerAdapter;
 import com.example.guardianmessenger.utils.AndroidUtils;
-import com.example.guardianmessenger.utils.ChatMessageModel;
+import com.example.guardianmessenger.utils.MessageModel;
 import com.example.guardianmessenger.utils.ChatModel;
 import com.example.guardianmessenger.utils.FirebaseUtils;
-import com.example.guardianmessenger.utils.UserModel;
+import com.example.guardianmessenger.utils.EmployeeModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,8 +33,8 @@ import java.util.Arrays;
 /**
  * This screen represents an individual chat activity
  */
-public class ChatActivity extends AppCompatActivity {
-    UserModel recipientModel;
+public class ChatPage extends AppCompatActivity {
+    EmployeeModel recipientModel;
     ChatRecyclerAdapter adapter;
     EditText messageInput;
     ImageButton sendButton, backButton;
@@ -69,7 +69,7 @@ public class ChatActivity extends AppCompatActivity {
 
         recipientName.setText(recipientModel.getName());
         // back button listener
-        backButton.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this,MessageActivity.class)));
+        backButton.setOnClickListener(v -> startActivity(new Intent(ChatPage.this, MessagesPage.class)));
 
         //Gets Chat ref
         getChats();
@@ -107,7 +107,7 @@ public class ChatActivity extends AppCompatActivity {
      */
     void setupChatRecyclerView(){
         Query query = FirebaseUtils.getChatMessageRef(chatId).orderBy("timestamp", Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<ChatMessageModel> options = new FirestoreRecyclerOptions.Builder<ChatMessageModel>().setQuery(query,ChatMessageModel.class).build();
+        FirestoreRecyclerOptions<MessageModel> options = new FirestoreRecyclerOptions.Builder<MessageModel>().setQuery(query, MessageModel.class).build();
         adapter = new ChatRecyclerAdapter(options,getApplicationContext());
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setReverseLayout(true);
@@ -153,7 +153,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //Encrypt Message
         Blob encryptedMsgBlob = AndroidUtils.encryptMessage(message);
-        ChatMessageModel msgModel = new ChatMessageModel(encryptedMsgBlob, FirebaseUtils.currentUserId(), Timestamp.now());
+        MessageModel msgModel = new MessageModel(encryptedMsgBlob, FirebaseUtils.currentUserId(), Timestamp.now());
         FirebaseUtils.getChatMessageRef(chatId).add(msgModel).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
